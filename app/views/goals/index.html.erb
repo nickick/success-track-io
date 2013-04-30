@@ -1,0 +1,10 @@
+<div id="new-goal"> </div>
+<div id="current-goals"> </div>
+
+<script type="text/javascript">
+	$( function() {
+		var indexGoalsData = <%= @goals.to_json.html_safe %>;
+		var allTimeFrames = <%= @time_frames.to_json.html_safe %>;
+		window.ST.initialize($('#current-goals'), $('#new-goal'), indexGoalsData , allTimeFrames);
+	});
+</script>

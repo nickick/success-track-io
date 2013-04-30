@@ -1,0 +1,76 @@
+<div class="row">
+	<fieldset class="goal-detail-view">
+		<div>
+			<div class="row centered goal-name">
+				<h3><%= goal.escape("name") %></h3>
+			</div>
+			<div class="row spaced">
+				<div class="large-12 large-centered columns">
+					<div class="large-3 columns" >
+						<h3 class="text-vertical-centered">Description</h3>
+					</div>
+					<div class="value large-9 columns">
+						<%= goal.escape("description") %>
+					</div>	
+				</div>
+			</div>
+			<div class="row spaced">
+				<div class="large-12 large-centered columns">
+					<div class="large-3 columns">
+						<h3 class="text-vertical-centered">Finish Date</h3>
+					</div>
+					<div class="value large-3 columns">
+						<h3 class="text-vertical-centered"><%= goal.escape("finish_date") %></h3>
+					</div>
+					<div class="large-2 columns">
+						<h3 class="text-vertical-centered">Status</h3>
+					</div>
+					<div class="value large-3 columns">
+						<div class="switch">
+							<% if (finished == "true") { %>
+							  <input id="<%= goal.escape('id') %>_not_completed" 
+									class="finished"
+									name="<%= goal.escape('id') %>_completion"  
+									type="radio" 
+									data-id="<%= goal.escape('id') %>"
+							  <label for="<%= goal.escape('id') %>_not_completed"
+								class="finish-clickable no">Waiting</label>
+
+							  <input id="<%= goal.escape('id') %>_completed" 
+									class="finished"
+									name="<%= goal.escape('id') %>_completion" 
+									type="radio" checked 
+									data-id="<%= goal.escape('id') %>">
+							  <label for="<%= goal.escape('id') %>_completed"
+								class="finish-clickable yes">Done</label>
+								
+							<% } else { %>
+								 
+							  <input id="<%= goal.escape('id') %>_not_completed" 
+									class="finished"
+									name="<%= goal.escape('id') %>_completion"  
+									type="radio" checked 
+									data-id="<%= goal.escape('id') %>">
+							  <label for="<%= goal.escape('id') %>_not_completed"
+								class="finish-clickable no">Incomplete</label>
+
+							  <input id="<%= goal.escape('id') %>_completed" 
+									class="finished"
+									name="<%= goal.escape('id') %>_completion" 
+									type="radio"  
+									data-id="<%= goal.escape('id') %>">
+							  <label for="<%= goal.escape('id') %>_completed yes">Completed</label>
+							<% }; %> 
+						</div>
+					</div>	
+				</div>
+			</div>
+			<div class="row spaced">
+
+				<div class="large-12 large-centered columns">
+				
+				</div>
+			</div>	
+		</div>		
+	</fieldset>
+</div>

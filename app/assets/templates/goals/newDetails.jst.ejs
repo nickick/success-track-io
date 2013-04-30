@@ -1,0 +1,37 @@
+<span class="centered" style="color: gray; margin-bottom: -5px"> Press enter again to quick-add your goal. </span>	
+<div class="large-12 goal-detail-view">
+	<fieldset>
+		<div class="row large-12">
+			
+			<div class="label large-3 columns">
+				<label for="Today_radio"><h3>Time Frame</h3></label>
+			</div>
+			<div class="field large-9 columns">
+			<ul class="button-group">
+				<% timeFrames.each(function(timeFrame) { %>
+					<% var frame = timeFrame.escape('frame') %>
+					<% if (timeFrame == "Today") {%>
+						<input type="radio" name="time_frame" id="Today_radio" checked >
+					<%} else {%>
+						<input type="radio" name="time_frame" id="<%= frame %>_radio" >
+					<% } %>
+					<label class="radio-label" for="<%= frame %>_radio"><%= frame %></label>
+				<% }) %>
+			</ul>
+			</div>
+			<div class="label large-3 columns">
+				<label for="finish_date"><h3>Finish Date</h3></label>
+			</div>
+			<div class="field large-9 columns">
+				<input type="text" placeholder="Today, 04/12/13" id="finish_date" tabindex=3>
+			</div>	
+			<div class="label large-3 columns">
+				<label for="goal_name"><h3>Description</h3></label>
+			</div>
+			<div class="field large-9 columns">
+				<textarea rows="4" placeholder="Run around the Charles under 6:30 at least 3 times per week" id="goal_name" tabindex=4></textarea>
+			</div>	
+
+		</div>
+	</fieldset>
+</div>
