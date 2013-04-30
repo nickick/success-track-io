@@ -3,17 +3,18 @@ ST.Views.GoalDetailView = Backbone.View.extend({
 		"click .finished" : "switchFinish",
 		"dblclick " : "editGoal"
 	},
-	
+
 	render: function() {
 		var renderedContent = JST["goals/detail"]({
 			goal: this.model,
-			finished: this.model.escape("finished")
+			finished: this.model.escape("finished"),
+      timeFrames: ST.Store.timeFrames
 		})
 		this.$el.html(renderedContent);
-		
+
 		return this;
 	},
-	
+
 	switchFinish: function() {
 		var new_finish = function(current_finish) {
 			if (current_finish == "true") {
@@ -32,7 +33,7 @@ ST.Views.GoalDetailView = Backbone.View.extend({
 			})
 		}, 30 );
 	},
-	
+
 	editGoal: function() {
 		console.log("logged this!")
 	}

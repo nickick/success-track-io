@@ -3,26 +3,29 @@
 }
 
 .text-vertical-centered {
-	line-height: 20px;
-	color: #2ba6cb;
+  position: relative;
+  top: 2px;
+  color: white;
+//	color: #2ba6cb;
 }
 
 .centered {
 	text-align: center;
 }
 
-.goal-name {
-	border-bottom: 1px solid black;	
-}
-
 .centered h3 {
 }
 
-input[type="text"] {
-	height: 3.3125em;
-	font-size: 2em;
+input[type="text"], {
+	height: 2.125em;
+	font-size: 3em;
+  font-family: "HelveticaNeue-UltraLight";
 	margin-bottom: 0px;
 	text-align: center;
+}
+
+input[type="date"] {
+  height: 3.3125em;
 }
 
 #new_goal_detail input[type="text"], textarea{
@@ -31,8 +34,8 @@ input[type="text"] {
 	margin-bottom: 20px;
 }
 
-input[type="text"]:focus, textarea:focus{
-	box-shadow: 0px 1px	10px 2px #adfefa inset;
+input[type="text"]:focus, input[type="date"]:focus, textarea:focus{
+	box-shadow: 0px 0px	20px 4px #adfefa inset;
 	background-color: white;
 };
 
@@ -46,15 +49,6 @@ textarea {
 
 .top {
 	margin-top: -25px;
-}
-
-body {
-	background-image:url(image_path('ps_neutral.png'))
-}
-
-.goal-detail-view {
-	background-color: white;
-	//background-image:url(image_path('white_wall_hash.png'))
 }
 
 #goal-detail-button {
@@ -73,10 +67,10 @@ input[type="radio"] {
 
 .radio-label {
 	font-weight: normal;
-	width: 110px;
+	width: 123px;
 	height: 3.2em;
 	display: inline-block;
-	margin-bottom: 20px;
+	margin-bottom: 12px;
 	background-color: #999999;
 	color: white;
 	vertical-align: middle;
@@ -85,7 +79,71 @@ input[type="radio"] {
 	line-height: 3em;
 }
 
+div.switch {
+  margin-bottom: 0px;
+}
+
 input[type="radio"]:checked + label.radio-label {
 	background-color: #333;
 	color: white;
 };
+
+
+div.description-row {
+  margin-top: 10px;
+  display: inline-block;
+  width: 100%;
+}
+
+h2,h3,h4,h5 {
+  font-family: "HelveticaNeue-Light";
+}
+
+h1 {
+  font-family: "HelveticaNeue-UltraLight";
+}
+
+.switch {
+  alignment: center;
+}
+
+body {
+	background-image:url(image_path('navy_blue.png'));
+  font-family: "HelveticaNeue-Light";
+  font-weight: lighter;
+}
+
+div.label h5, div.value h5 {
+  //color: #2ba6cb;
+  color: white;
+}
+
+div.label {
+  background: none;
+}
+
+div#current-goals {
+  width:100%;
+}
+
+.goal-name, .goal-detail-add {
+	background-color: white;
+	background-image:url(image_path('white_wall_hash.png'));
+  border-bottom: 7px ridge #2ba6cb;
+}
+
+.goal-name h1 {
+  position: relative;
+  top: 5px;
+}
+
+.goal-detail{
+  background-image:url(image_path('grey_wash_wall.png'));
+  //background-color: #2ba6cb;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+#new-goal-name{
+}

@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+TimeFrame.create!([{frame: 'Today'},
+                   {frame: 'This Week'},
+                   {frame: 'This Month'},
+                   {frame: 'This Year'},
+                   {frame: 'This Decade'},
+                   {frame: 'This Lifetime'},])
