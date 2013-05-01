@@ -11,7 +11,7 @@ ST.Collections.GoalCollection = Backbone.Collection.extend({
     var filtered;
     if (status == 'all') {
       filtered = this.filter(function(goal){
-        return true;
+        return goal.get("archived") != true;
       }
     )} else if (status == 'archived') {
       filtered = this.filter(function(goal){

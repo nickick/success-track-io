@@ -1,6 +1,13 @@
 ST.Views.GoalDetailView = Backbone.View.extend({
 	initialize: function() {
 		this.listenTo(this.model, "change", this.render);
+    this.editBooleans = {
+      timeFrameEdit: false,
+      finishDateEdit: false,
+      statusEdit: false,
+      nameEdit: false,
+      descriptionEdit:false
+    }
 	},
 
 	events: {
@@ -64,17 +71,20 @@ ST.Views.GoalDetailView = Backbone.View.extend({
   },
 
 	chooseTimeFrame: function() {
-		var renderedContent = JST["goals/editDetailGoal"]({
-			goal: this.model,
-			finished: this.model.escape("finished"),
-      timeFrames: ST.Store.timeFrames,
-      todayString: this.model.escape("finish_date").slice(0,10)
-		});
+    if (!this.editBooleans['timeFrameEdit']){
+      this.editBooleans['timeFrameEdit'] = true;
+  		var renderedContent = JST["goals/editDetailGoal"]({
+  			goal: this.model,
+  			finished: this.model.escape("finished"),
+        timeFrames: ST.Store.timeFrames,
+        todayString: this.model.escape("finish_date").slice(0,10)
+  		});
 
-    var goalIdString = '#goal_'+this.model.escape("id")+'_detail';
+      var goalIdString = '#goal_'+this.model.escape("id")+'_detail';
 
-    $(goalIdString).prepend(renderedContent);
-    $(goalIdString).slideDown();
+      $(goalIdString).prepend(renderedContent);
+      $(goalIdString).slideDown();
+    }
 
 		return this;
 	},
@@ -95,24 +105,33 @@ ST.Views.GoalDetailView = Backbone.View.extend({
   },
 
   descriptionEdit: function() {
-    var goalString = '.goal-'+this.model.escape('id')+'-description';
-    var inputString = "<input type='text' class='detail-input' id='goal_description_edit'>";
-    $(goalString).html(inputString);
-    $('#goal_description_edit').val(this.model.escape("description")).focus();
+    if (!this.editBooleans['descriptionEdit']){
+      this.editBooleans['descriptionEdit'] = true;
+      var goalString = '.goal-'+this.model.escape('id')+'-description';
+      var inputString = "<input type='text' class='detail-input' id='goal_description_edit'>";
+      $(goalString).html(inputString);
+      $('#goal_description_edit').val(this.model.escape("description")).focus();
+    };
   },
 
   finishDateEdit: function() {
-    var goalString = '.goal-'+this.model.escape('id')+'-finish-date';
-    var inputString = "<input type='text' class='detail-input' id='goal_finish_date_edit'>";
-    $(goalString).html(inputString);
-    $('#goal_finish_date_edit').val(this.model.escape("finish_date").slice(0,10)).focus();
+    if (!this.editBooleans['finishDateEdit']){
+      this.editBooleans['finishDateEdit'] = true;
+      var goalString = '.goal-'+this.model.escape('id')+'-finish-date';
+      var inputString = "<input type='text' class='detail-input' id='goal_finish_date_edit'>";
+      $(goalString).html(inputString);
+      $('#goal_finish_date_edit').val(this.model.escape("finish_date").slice(0,10)).focus();
+    };
   },
 
   editName: function() {
-    var goalStringId = '#goal-'+this.model.escape('id')+'-name';
-    var inputString = "<input type='text' id='goal_name_edit'>";
-    $(goalStringId).html(inputString);
-    $('#goal_name_edit').val(this.model.get("name")).focus();
+    if (!this.editBooleans['nameEdit']){
+      this.editBooleans['nameEdit'] = true;
+      var goalStringId = '#goal-'+this.model.escape('id')+'-name';
+      var inputString = "<input type='text' id='goal_name_edit'>";
+      $(goalStringId).html(inputString);
+      $('#goal_name_edit').val(this.model.get("name")).focus();
+    };
   },
 
   findCheckedFrameId: function($timeFrames) {
@@ -144,6 +163,13 @@ ST.Views.GoalDetailView = Backbone.View.extend({
       time_frame: timeFrameChecked
     });
     this.model.save();
+    this.editBooleans = {
+      timeFrameEdit: false,
+      finishDateEdit: false,
+      statusEdit: false,
+      nameEdit: false,
+      descriptionEdit:false
+    };
   },
 
 	filterOnEnter: function(e) {

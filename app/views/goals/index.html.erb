@@ -6,5 +6,6 @@
 		var indexGoalsData = <%= @goals.to_json.html_safe %>;
 		var allTimeFrames = <%= @time_frames.to_json.html_safe %>;
 		window.ST.initialize($('#current-goals'), $('#new-goal'), indexGoalsData , allTimeFrames);
+    Backbone.history.navigate("#");
 	});
 </script>

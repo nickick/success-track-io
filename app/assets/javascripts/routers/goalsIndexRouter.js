@@ -33,12 +33,12 @@ ST.Routers.GoalsRouter = Backbone.Router.extend({
   },
 
 	index: function(){
+    this.selectNavLi();
 		var indexGoalView = new ST.Views.IndexGoalView({
 			collection: ST.Store.indexGoals
 		});
 
     this.newGoalBox();
 		this.$contentDiv.html(indexGoalView.render().$el);
-    this.selectNavLi();
 	},
 });
