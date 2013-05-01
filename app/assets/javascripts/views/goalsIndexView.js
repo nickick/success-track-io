@@ -1,9 +1,5 @@
 ST.Views.IndexGoalView = Backbone.View.extend({
 
-	initialize: function() {
-		this.listenTo(ST.Store.indexGoals, "add", this.render);
-	},
-
 	events: {
 		"click .button": "show",
 		"click .finished-clickable": "switchFinished"
@@ -11,7 +7,6 @@ ST.Views.IndexGoalView = Backbone.View.extend({
 
 	render: function() {
 		var that = this;
-
     that.collection = that.collection.filterStatus(
       that.pathToFilter[that.currentPath()]
     );
@@ -19,14 +14,12 @@ ST.Views.IndexGoalView = Backbone.View.extend({
 		var renderedTopContent = JST["goals/index"]({
 			goals: that.collection
 		});
-
 		that.$el.html(renderedTopContent);
 
 		that.collection.each(function(goal) {
 			var goalDetailView = new ST.Views.GoalDetailView({
 				model: goal
 			})
-
 			that.$el.append(goalDetailView.render().$el);
       that.$el.fadeIn(300);
 		})

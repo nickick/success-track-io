@@ -11,6 +11,8 @@ ST.Routers.GoalsRouter = Backbone.Router.extend({
 		this.$contentDiv = $contentDiv;
 		this.$newGoalDiv = $newGoalDiv;
 		this.index();
+
+    this.listenTo(ST.Store.indexGoals, "add", this.index);
 	},
 
   selectNavLi: function() {
@@ -39,26 +41,4 @@ ST.Routers.GoalsRouter = Backbone.Router.extend({
 		this.$contentDiv.html(indexGoalView.render().$el);
     this.selectNavLi();
 	},
-
-  // completedIndex: function() {
-//     ST.Store.completedGoals = ST.Store.indexGoals.filterStatus(true);
-//     var completedIndexGoalView = new ST.Views.IndexGoalView({
-//       collection: ST.Store.completedGoals
-//     });
-//
-//     this.newGoalBox();
-//     this.$contentDiv.html(completedIndexGoalView.render().$el);
-//     this.selectNavLi();
-//   },
-//
-//   activeIndex: function() {
-//     ST.Store.activeGoals = ST.Store.indexGoals.filterStatus(false);
-//     var activeIndexGoalView = new ST.Views.IndexGoalView({
-//       collection: ST.Store.activeGoals
-//     });
-//
-//     this.newGoalBox();
-//     this.$contentDiv.html(activeIndexGoalView.render().$el);
-//     this.selectNavLi();
-//   }
 });

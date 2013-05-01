@@ -1,27 +1,31 @@
 <div class="completed-<%= goal.escape('finished') %>">
   <div class="row goal-name">
     <div class="row centered name-container">
-    	<h1><%= goal.escape("name") %></h1>
+    	<h1 id="goal-<%=goal.escape('id')%>-name"><%= goal.escape("name") %></h1>
     </div>
   </div>
-  <div class="row goal-detail" id="goal_<%= goal.escape("id") %>_detail">
+  <div class="row goal-detail-top" id="goal_<%= goal.escape("id") %>_detail">
   	<div class="large-12 large-centered columns">
       <!-- Time Frame -->
   		<div class="detail-minor large-2 columns">
-  			<h5 class="goal-detail-label">Time Frame</h5>
+  			<h5 class="goal-detail-label  goal-time-frame-clickable">
+          Time Frame
+        </h5>
   		</div>
   		<div class="detail-minor large-2 columns">
         <% var goalId = parseInt(goal.escape("time_frame_id")) %>
-  			<h5 class="goal-detail-field">
+  			<h5 class="goal-detail-field-center goal-time-frame-clickable">
           <%= timeFrames.where({id: goalId})[0].escape("frame") || "&nbsp;" %>
         </h5>
   		</div>
       <!-- Finish Date -->
   		<div class="detail-minor large-2 columns">
-  			<h5 class="goal-detail-label">Finish Date</h5>
+  			<h5 class="goal-detail-label goal-finish-date-clickable">Finish Date</h5>
   		</div>
   		<div class="detail-minor large-2 columns">
-  			<h5 class="goal-detail-field"><%= goal.escape("finish_date").slice(0,10) || "&nbsp;" %></h5>
+  			<h5 class="goal-detail-field-center goal-finish-date-clickable
+              goal-<%=goal.escape('id')%>-finish-date">
+              <%= goal.escape("finish_date").slice(0,10) || "&nbsp;" %></h5>
   		</div>
       <!-- Status -->
   		<div class="detail-minor large-2 columns">
@@ -66,15 +70,24 @@
   			</div>
   		</div>
   	</div>
+  </div>
+</div>
     <!-- Description -->
+<div class="completed-<%= goal.escape('finished') %>">
+  <div class="row goal-detail-bottom" id="goal_<%= goal.escape("id") %>_detail">
+
     <div class="large-12 large-centered columns">
   		<div class="description-row">
         <div class="large-12">
   				<div class="detail-major large-2 columns" >
-  					<h5 class="goal-detail-label">Description</h5>
+  					<h5 class="goal-detail-label goal-description-clickable">
+              Description
+            </h5>
   				</div>
   				<div class="detail-major large-10 columns">
-  					<h5 class="goal-detail-field"><%= goal.escape("description") || "&nbsp;"%></h5>
+  					<h5 class="goal-detail-field-left goal-description-clickable
+              goal-<%=goal.escape('id')%>-description">
+              <%= goal.escape("description") || "&nbsp;"%></h5>
   				</div>
         </div>
   		</div>

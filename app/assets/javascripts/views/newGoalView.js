@@ -90,7 +90,6 @@ ST.Views.NewGoalView = Backbone.View.extend({
 		this.nameGoalOnly = true;
     var $timeFrames = $('[name="time_frame"]');
     var timeFrameChecked = this.findCheckedFrameId($timeFrames);
-    console.log(timeFrameChecked);
 		var that = this;
 		that.model.set({
 			name: $('#new-goal-name').val(),

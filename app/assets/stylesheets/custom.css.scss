@@ -2,18 +2,24 @@
 	margin: 10px;
 }
 
-.goal-detail-label, .goal-detail-field {
+.goal-detail-label, .goal-detail-field-center, .goal-detail-field-left {
+
   position: relative;
   color: white;
   font-size: 1.5em;
 }
 
-.goal-detail-field {
+.goal-detail-field-center, .goal-detail-field-left {
   border-bottom: 1px dotted white;
 }
 
+.goal-detail-field-center {
+  text-align: center;
+
+}
+
 .goal-detail-label {
-  border-right: 1px solid #2ba6cb;
+  text-align: center;
   border-bottom: 1px solid #2ba6cb;
 }
 
@@ -21,7 +27,7 @@
 	text-align: center;
 }
 
-input[type="text"], {
+input[type="text"]#new-goal-name {
 	height: 2.125em;
 	font-size: 3em;
   font-family: "HelveticaNeue-UltraLight";
@@ -29,8 +35,29 @@ input[type="text"], {
 	text-align: center;
 }
 
-input[type="date"] {
-  height: 3.3125em;
+h1 input[type="text"] {
+	height: 1.4em;
+	font-size: 1em;
+  font-family: "HelveticaNeue-UltraLight";
+	margin: 0px;
+  padding: 0px;
+	text-align: center;
+}
+
+input[type="text"].detail-input, input[type="date"].detail-input {
+  color: white;
+  background-color: #333333;
+  font-size: 1em;
+  height: 1.37em;
+  border: none;
+  margin-bottom: 0px;
+  padding: 0px;
+}
+
+input[type="text"].detail-input:focus, input[type="date"].detail-input:focus {
+  box-shadow: none;
+  color: white;
+  background-color: #222222;
 }
 
 #new_goal_detail input[type="text"], textarea{
@@ -47,6 +74,10 @@ input[type="text"]:focus, input[type="date"]:focus, textarea:focus{
 textarea {
 	height: 100px;
   resize: none;
+}
+
+input[type="date"] {
+  height: 3.3125em;
 }
 
 .top-bar {
@@ -67,14 +98,9 @@ textarea {
 
 }
 
-input[type="radio"] {
-	display:none;
-}
-
-.radio-label {
+.radio-label, .edit-radio-label{
 	font-weight: normal;
-	width: 123px;
-	height: 3.2em;
+  text-align: center;
 	display: inline-block;
 	margin-bottom: 12px;
 	background-color: #999999;
@@ -82,11 +108,28 @@ input[type="radio"] {
 	vertical-align: middle;
 	margin-left: 2px;
 	font-size: 16px;
+}
+
+.radio-label {
+  width: 123px;
+	height: 3.2em;
 	line-height: 3em;
+}
+
+.edit-radio-label {
+  width: 153px;
+  height: 2em;
+  margin-bottom: 20px;
+  margin-top: -5px;
+  line-height: 1.8em;
 }
 
 div.switch {
   margin-bottom: 0px;
+}
+
+input[type="radio"] {
+	display:none;
 }
 
 input[type="radio"]:checked + label.radio-label {
@@ -94,6 +137,10 @@ input[type="radio"]:checked + label.radio-label {
 	color: white;
 };
 
+input[type="radio"]:checked + label.edit-radio-label {
+	background-color: #333;
+	color: white;
+};
 
 div.description-row {
   margin-top: 10px;
@@ -176,12 +223,18 @@ h3.edit-detail-field {
   top: 5px;
 }
 
-.goal-detail{
+.goal-detail-top, .goal-detail-bottom{
   background-image:url(image_path('grey_wash_wall.png'));
   //background-color: #2ba6cb;
-  padding-top: 10px;
-  padding-bottom: 10px;
+}
+
+.goal-detail-bottom{
   margin-bottom: 30px;
+  padding-bottom: 10px;
+}
+
+.goal-detail-top{
+  padding-top: 10px;
 }
 
 #new-goal-name{
@@ -206,8 +259,9 @@ div.navbar-row{
   font-family: 'HelveticaNeue-Light';
 }
 
-.top-bar-section ul li a:hover {
+.top-bar-section ul li:hover a {
   color: white;
+  background-color: white;
 }
 
 .top-bar-section ul li.active a, .top-bar-section ul li.hover a {
@@ -225,12 +279,14 @@ div.completed-true {
 
 div#archive-button, div#delete-button {
   position:absolute;
-  right: 10px;
+  right: 15px;
   bottom: -25px;
   padding: 5px;
   width: 80px;
   background-color: #2ba6cb;
   text-align: center;
+  cursor: pointer;
+  color: white;
 }
 
 div#delete-button {
@@ -238,6 +294,15 @@ div#delete-button {
   right: 120px;
   background-color: #2ba6cb;
 }
+
+div#delete-button:hover {
+ box-shadow: 0px 0px 5px 1px #7c0003;
+}
+
+div#archive-button:hover {
+ box-shadow: 0px 0px 5px 1px #4f4300;
+}
+
 
 div.name-container {
   position: relative;
@@ -253,4 +318,13 @@ nav.top-bar {
 
 div.new-goal-container {
   margin-top: 40px;
+}
+
+button#save-button {
+  width: 100%;
+  top: -30px;
+}
+
+.goal-description-clickable:hover, .goal-finish-date-clickable:hover, .goal-time-frame-clickable:hover{
+  cursor: pointer;
 }
