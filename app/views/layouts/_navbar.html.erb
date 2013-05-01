@@ -27,9 +27,9 @@
       <li><a href="/#archived">Archived</a></li>
       <li class="divider"></li>
     </ul>
-		<% if notice || alert %>
+		<% if notice || alert || flash[:notice] %>
     <ul class="left notice">
-			<li><a href=#><%= notice %> <%= alert %> </a></li>
+			<li><a href=#><%= notice %> <%= alert %> <%= flash[:notice] %></a></li>
 	    <li></div></li>
 			<li class="divider"></li>
 		</ul>

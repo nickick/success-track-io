@@ -1,6 +1,7 @@
 ST.Views.GoalDetailView = Backbone.View.extend({
 	initialize: function() {
 		this.listenTo(this.model, "change", this.render);
+    this.listenTo(this.model, "request", this.render);
     this.editBooleans = {
       timeFrameEdit: false,
       finishDateEdit: false,
@@ -18,7 +19,9 @@ ST.Views.GoalDetailView = Backbone.View.extend({
     "dblclick .name-container"                : "editName",
     "dblclick .goal-description-clickable"    : "descriptionEdit",
     "dblclick .goal-finish-date-clickable"    : "finishDateEdit",
+    "dblclick .edit-radio-label"              : "updateGoal",
     "keypress"                                : "filterOnEnter",
+    "mouseover .goal-status-clickable"        : "installClickStatusHandler"
 	},
 
 	render: function() {
@@ -32,6 +35,14 @@ ST.Views.GoalDetailView = Backbone.View.extend({
 
 		return this;
 	},
+
+  installClickStatusHandler: function() {
+    var that = this;
+    $('#finish-click-'+that.model.get('id')).dblclick(function(){
+      $('#finish-click-'+that.model.get('id')).removeAttr('id')
+      $('#finish-switch-'+that.model.get('id')).click();
+    });
+  },
 
   viewFade: function(){
     this.$el.slideUp();
@@ -81,9 +92,9 @@ ST.Views.GoalDetailView = Backbone.View.extend({
   		});
 
       var goalIdString = '#goal_'+this.model.escape("id")+'_detail';
-
+      var timeFrameEditString = '.time-frame-edit-'+this.model.escape("id");
       $(goalIdString).prepend(renderedContent);
-      $(goalIdString).slideDown();
+      $(timeFrameEditString).slideDown();
     }
 
 		return this;
@@ -152,28 +163,40 @@ ST.Views.GoalDetailView = Backbone.View.extend({
     };
   },
 
+  timeFrameSlideUp: function() {
+    var timeFrameEditString = '.time-frame-edit-'+this.model.escape("id");
+    $(timeFrameEditString).slideUp(100).addClass('hidden');
+  },
+
   updateGoal: function() {
     var that = this;
-    var $timeFrames = $('[name="time_frame_'+this.model.escape('id')+'"]');
-    var timeFrameChecked = this.findCheckedFrameId($timeFrames);
-    this.model.set({
-      name: $('#goal_name_edit').val() || this.model.escape('name'),
-      description: $('#goal_description_edit').val() || this.model.escape('description'),
-      finish_date: that.finishDate(),
-      time_frame: timeFrameChecked
-    });
-    this.model.save();
-    this.editBooleans = {
-      timeFrameEdit: false,
-      finishDateEdit: false,
-      statusEdit: false,
-      nameEdit: false,
-      descriptionEdit:false
-    };
+    var $timeFrames = $("[name='time_frame_"+that.model.get('id')+"']");
+    var timeFrameChecked = that.findCheckedFrameId($timeFrames);
+    that.timeFrameSlideUp();
+    setTimeout(function() {
+      that.model.set({
+        name: $('#goal_name_edit').val() || that.model.get('name'),
+        description: $('#goal_description_edit').val() || that.model.get('description'),
+        finish_date: that.finishDate(),
+        time_frame_id: timeFrameChecked || that.model.get('time_frame_id')
+      });
+      that.model.save({},{
+        errors: function() {
+          $('.goal'+that.model.escape("id")+'errors').html('<div class="errors">'+xhr.responseText+'</div><br>');
+          $('.error-container').slideDown();
+        }
+      });
+      that.editBooleans = {
+        timeFrameEdit: false,
+        finishDateEdit: false,
+        statusEdit: false,
+        nameEdit: false,
+        descriptionEdit:false
+      };
+    }, 100);
   },
 
 	filterOnEnter: function(e) {
-		if (e.keyCode != 13) { return };
-		this.updateGoal();
+		if (e.keyCode == 13) { this.updateGoal() };
 	},
 });

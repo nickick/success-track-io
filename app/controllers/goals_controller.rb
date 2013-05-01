@@ -15,14 +15,17 @@ class GoalsController < ApplicationController
     if @goal.save
       render :json => @goal
     else
-      render :json => @goal.errors
+      render :json => @goal.errors.full_messages.join(", "), :status => 422
     end
   end
 
   def update
     @goal = Goal.find(params[:id])
-    @goal.update_attributes(params[:goal])
-    render :json => @goal
+    if @goal.update_attributes(params[:goal])
+      render :json => @goal
+    else
+      render :json => @goal.errors.full_messages.join(", "), :status => 422
+    end
   end
 
   def destroy

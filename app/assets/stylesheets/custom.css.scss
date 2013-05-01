@@ -282,7 +282,7 @@ div#archive-button, div#delete-button {
   right: 15px;
   bottom: -25px;
   padding: 5px;
-  width: 80px;
+  width: 90px;
   background-color: #2ba6cb;
   text-align: center;
   cursor: pointer;
@@ -291,7 +291,7 @@ div#archive-button, div#delete-button {
 
 div#delete-button {
   position:absolute;
-  right: 120px;
+  right: 125px;
   background-color: #2ba6cb;
 }
 
@@ -325,6 +325,35 @@ button#save-button {
   top: -30px;
 }
 
-.goal-description-clickable:hover, .goal-finish-date-clickable:hover, .goal-time-frame-clickable:hover{
-  cursor: pointer;
+//.goal-status-clickable:hover, .goal-description-clickable:hover, .goal-finish-date-clickable:hover, .goal-time-frame-clickable:hover{
+//  cursor: pointer;
+//}
+
+.finished {
+  padding: 10px;
+  text-align: center;
+  font-family: "HelveticaNeue-Light";
+  background-color: #aaa;
+}
+
+.finished:hover {
+ cursor: pointer;
+}
+
+.completed-button {
+  color: #247800;
+}
+
+.incomplete-button {
+  color: #8b0700;
+}
+
+div.error-container {
+  display: none;
+  text-align: center;
+  padding: 10px;
+}
+
+.errors {
+  color: red;
 }

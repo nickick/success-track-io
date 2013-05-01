@@ -2,6 +2,7 @@ ST.Views.NewGoalView = Backbone.View.extend({
 
 	initialize: function() {
 		this.nameGoalOnly = true;
+    this.detailFormOut = false;
 		this.listenTo(ST.Store.indexGoals, "add", this.render);
 	},
 
@@ -10,6 +11,7 @@ ST.Views.NewGoalView = Backbone.View.extend({
     'click #save-button': 'saveNewGoal',
 		'keypress #new-goal-name': 'filterOnEnter',
     'keypress #finish_date': 'filterOnEnter',
+    'keypress #save-button' : 'saveNewGoal'
 	},
 
 	render: function() {
@@ -30,12 +32,27 @@ ST.Views.NewGoalView = Backbone.View.extend({
     return year + "-" + month + "-" + date;
   },
 
-  changeEditButton: function(){
-    var buttonString =
-      "<button id='save-button'>Add Goal</button>"
-    $('#goal-detail-button').remove();
-    $('#new-goal-input').append(buttonString);
-  },
+	filterOnEnter: function(e) {
+
+		if (e.keyCode != 13) { return };
+		if (this.nameGoalOnly && !this.detailFormOut) {
+			this.appendDetail();
+		} else {
+			this.saveNewGoal();
+		}
+	},
+
+	appendDetail: function() {
+		$detailEl = $('#new_goal_detail');
+		this.nameGoalOnly = false;
+		this.addDetail($detailEl);
+		this.applyFadeIn($detailEl);
+    this.detailFormOut = true;
+	},
+
+	applyFadeIn: function($detailEl) {
+		$detailEl.slideDown();
+	},
 
 	addDetail: function($detailEl) {
 		var renderedDetailContent = JST['goals/newDetails']({
@@ -55,26 +72,12 @@ ST.Views.NewGoalView = Backbone.View.extend({
 		return $detailEl;
 	},
 
-	filterOnEnter: function(e) {
-
-		if (e.keyCode != 13) { return };
-		if (this.nameGoalOnly) {
-			this.appendDetail();
-		} else {
-			this.saveNewGoal();
-		}
-	},
-
-	appendDetail: function() {
-		$detailEl = $('#new_goal_detail');
-		this.nameGoalOnly = false;
-		this.addDetail($detailEl);
-		this.applyFadeIn($detailEl);
-	},
-
-	applyFadeIn: function($detailEl) {
-		$detailEl.slideDown();
-	},
+  changeEditButton: function(){
+    var buttonString =
+      "<button id='save-button' tabindex=5>Add Goal</button>"
+    $('#goal-detail-button').remove();
+    $('#new-goal-input').append(buttonString);
+  },
 
   findCheckedFrameId: function($timeFrames) {
     var finValue = null;
@@ -104,9 +107,14 @@ ST.Views.NewGoalView = Backbone.View.extend({
 			success: function() {
 				ST.Store.indexGoals.add(that.model);
 			},
-			error: function() {
-
-			}
+      error: function(model, xhr) {
+        $('.error-container').html('<div class="errors">'+xhr.responseText+'</div><br>');
+        $('.error-container').slideDown();
+        var nameError = "Name can't be blank"
+        if (xhr.responseText.indexOf(nameError) != -1) {
+          $('#new-goal-name').focus();
+        }
+      }
 		});
 	}
 });
