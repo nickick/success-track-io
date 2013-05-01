@@ -2,8 +2,9 @@ ST.Routers.GoalsRouter = Backbone.Router.extend({
 
   routes: {
     ""          : "index",
-    "completed" : "completedIndex",
-    "active"    : "activeIndex"
+    "completed" : "index",
+    "active"    : "index",
+    "archived"  : "index"
   },
 
 	initialize: function($contentDiv, $newGoalDiv){
@@ -11,6 +12,13 @@ ST.Routers.GoalsRouter = Backbone.Router.extend({
 		this.$newGoalDiv = $newGoalDiv;
 		this.index();
 	},
+
+  selectNavLi: function() {
+    $('.active').removeClass('active');
+    var url = window.location.href;
+    var pathString = 'a[href="/' + url.split('/')[3] + '"]';
+    $(pathString).parent().addClass('active');
+  },
 
   newGoalBox: function() {
     var newGoal = new ST.Models.GoalModel();
@@ -23,37 +31,34 @@ ST.Routers.GoalsRouter = Backbone.Router.extend({
   },
 
 	index: function(){
-    this.$contentDiv.fadeOut(200);
 		var indexGoalView = new ST.Views.IndexGoalView({
 			collection: ST.Store.indexGoals
 		});
 
     this.newGoalBox();
 		this.$contentDiv.html(indexGoalView.render().$el);
-    this.$contentDiv.fadeIn(200);
+    this.selectNavLi();
 	},
 
-  completedIndex: function() {
-    this.$contentDiv.fadeOut(200);
-    var completedGoals = ST.Store.indexGoals.filterStatus(true)
-    var completedIndexGoalView = new ST.Views.IndexGoalView({
-      collection: completedGoals
-    });
-
-    this.newGoalBox();
-    this.$contentDiv.html(completedIndexGoalView.render().$el);
-    this.$contentDiv.fadeIn(200);
-  },
-
-  activeIndex: function() {
-    this.$contentDiv.fadeOut(200);
-    var activeGoals = ST.Store.indexGoals.filterStatus(false)
-    var activeIndexGoalView = new ST.Views.IndexGoalView({
-      collection: activeGoals
-    });
-
-    this.newGoalBox();
-    this.$contentDiv.html(activeIndexGoalView.render().$el);
-    this.$contentDiv.fadeIn(200);
-  }
+  // completedIndex: function() {
+//     ST.Store.completedGoals = ST.Store.indexGoals.filterStatus(true);
+//     var completedIndexGoalView = new ST.Views.IndexGoalView({
+//       collection: ST.Store.completedGoals
+//     });
+//
+//     this.newGoalBox();
+//     this.$contentDiv.html(completedIndexGoalView.render().$el);
+//     this.selectNavLi();
+//   },
+//
+//   activeIndex: function() {
+//     ST.Store.activeGoals = ST.Store.indexGoals.filterStatus(false);
+//     var activeIndexGoalView = new ST.Views.IndexGoalView({
+//       collection: ST.Store.activeGoals
+//     });
+//
+//     this.newGoalBox();
+//     this.$contentDiv.html(activeIndexGoalView.render().$el);
+//     this.selectNavLi();
+//   }
 });

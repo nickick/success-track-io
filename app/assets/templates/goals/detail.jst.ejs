@@ -1,79 +1,89 @@
-<div class="row goal-name">
-  <div class="row centered">
-  	<h1><%= goal.escape("name") %></h1>
+<div class="completed-<%= goal.escape('finished') %>">
+  <div class="row goal-name">
+    <div class="row centered name-container">
+    	<h1><%= goal.escape("name") %></h1>
+    </div>
   </div>
-</div>
-<div class="row goal-detail">
-	<div class="large-12 large-centered columns">
-    <!-- Time Frame -->
-		<div class="label large-2 columns">
-			<h5 class="text-vertical-centered">Time Frame</h5>
-		</div>
-		<div class="value large-2 columns">
-      <% var goalTimeId = goal.escape("time_frame_id") %>
-			<h5><%= timeFrames.where({id: parseInt(goalTimeId)})[0].escape("frame") %></h5>
-		</div>
-    <!-- Finish Date -->
-		<div class="label large-2 columns">
-			<h5 class="text-vertical-centered">Finish Date</h5>
-		</div>
-		<div class="value large-2 columns">
-			<h5><%= goal.escape("finish_date").slice(0,10) %></h5>
-		</div>
-    <!-- Status -->
-		<div class="label large-2 columns">
-			<h5 class="text-vertical-centered">Status</h5>
-		</div>
-		<div class="value large-2 columns">
-			<div class="switch">
-				<% if (finished == "true") { %>
-				  <input id="<%= goal.escape('id') %>_not_completed"
-						class="finished"
-						name="<%= goal.escape('id') %>_completion"
-						type="radio"
-						data-id="<%= goal.escape('id') %>"
-				  <label for="<%= goal.escape('id') %>_not_completed"
-					class="finish-clickable no">Incomplete</label>
+  <div class="row goal-detail" id="goal_<%= goal.escape("id") %>_detail">
+  	<div class="large-12 large-centered columns">
+      <!-- Time Frame -->
+  		<div class="detail-minor large-2 columns">
+  			<h5 class="goal-detail-label">Time Frame</h5>
+  		</div>
+  		<div class="detail-minor large-2 columns">
+        <% var goalId = parseInt(goal.escape("time_frame_id")) %>
+  			<h5 class="goal-detail-field">
+          <%= timeFrames.where({id: goalId})[0].escape("frame") || "&nbsp;" %>
+        </h5>
+  		</div>
+      <!-- Finish Date -->
+  		<div class="detail-minor large-2 columns">
+  			<h5 class="goal-detail-label">Finish Date</h5>
+  		</div>
+  		<div class="detail-minor large-2 columns">
+  			<h5 class="goal-detail-field"><%= goal.escape("finish_date").slice(0,10) || "&nbsp;" %></h5>
+  		</div>
+      <!-- Status -->
+  		<div class="detail-minor large-2 columns">
+  			<h5 class="goal-detail-label">Status</h5>
+  		</div>
+  		<div class="detail-minor large-2 columns">
+  			<div class="switch">
+  				<% if (finished == "true") { %>
+  				  <input id="<%= goal.escape('id') %>_not_completed"
+  						class="finished"
+  						name="<%= goal.escape('id') %>_completion"
+  						type="radio"
+  						data-id="<%= goal.escape('id') %>"
+  				  <label for="<%= goal.escape('id') %>_not_completed"
+  					class="finish-clickable no">Incomplete</label>
 
-				  <input id="<%= goal.escape('id') %>_completed"
-						class="finished"
-						name="<%= goal.escape('id') %>_completion"
-						type="radio" checked
-						data-id="<%= goal.escape('id') %>">
-				  <label for="<%= goal.escape('id') %>_completed"
-					class="finish-clickable yes">Completed</label>
+  				  <input id="<%= goal.escape('id') %>_completed"
+  						class="finished"
+  						name="<%= goal.escape('id') %>_completion"
+  						type="radio" checked
+  						data-id="<%= goal.escape('id') %>">
+  				  <label for="<%= goal.escape('id') %>_completed"
+  					class="finish-clickable yes">Completed</label>
 
-				<% } else { %>
+  				<% } else { %>
 
-				  <input id="<%= goal.escape('id') %>_not_completed"
-						class="finished"
-						name="<%= goal.escape('id') %>_completion"
-						type="radio" checked
-						data-id="<%= goal.escape('id') %>">
-				  <label for="<%= goal.escape('id') %>_not_completed"
-					class="finish-clickable no">Incomplete</label>
+  				  <input id="<%= goal.escape('id') %>_not_completed"
+  						class="finished"
+  						name="<%= goal.escape('id') %>_completion"
+  						type="radio" checked
+  						data-id="<%= goal.escape('id') %>">
+  				  <label for="<%= goal.escape('id') %>_not_completed"
+  					class="finish-clickable no">Incomplete</label>
 
-				  <input id="<%= goal.escape('id') %>_completed"
-						class="finished"
-						name="<%= goal.escape('id') %>_completion"
-						type="radio"
-						data-id="<%= goal.escape('id') %>">
-				  <label for="<%= goal.escape('id') %>_completed yes">Completed</label>
-				<% }; %>
-			</div>
-		</div>
-	</div>
-  <!-- Description -->
-  <div class="large-12 large-centered columns">
-		<div class="description-row">
-      <div class="large-12">
-				<div class="label large-2 columns" >
-					<h5 class="text-vertical-centered">Description</h5>
-				</div>
-				<div class="label large-10 columns">
-					<h5 class="text-vertical-centered"><%= goal.escape("description") || "&nbsp;"%></h5>
-				</div>
-      </div>
-		</div>
+  				  <input id="<%= goal.escape('id') %>_completed"
+  						class="finished"
+  						name="<%= goal.escape('id') %>_completion"
+  						type="radio"
+  						data-id="<%= goal.escape('id') %>">
+  				  <label for="<%= goal.escape('id') %>_completed yes">Completed</label>
+  				<% }; %>
+  			</div>
+  		</div>
+  	</div>
+    <!-- Description -->
+    <div class="large-12 large-centered columns">
+  		<div class="description-row">
+        <div class="large-12">
+  				<div class="detail-major large-2 columns" >
+  					<h5 class="goal-detail-label">Description</h5>
+  				</div>
+  				<div class="detail-major large-10 columns">
+  					<h5 class="goal-detail-field"><%= goal.escape("description") || "&nbsp;"%></h5>
+  				</div>
+        </div>
+  		</div>
+      <div id="delete-button">Delete</div>
+      <% if (currentPath == "#archived") {%>
+        <div id="archive-button">Unarchive</div>
+      <%} else {%>
+        <div id="archive-button">Archive</div>
+      <% } %>
+    </div>
   </div>
 </div>

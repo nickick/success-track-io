@@ -2,18 +2,23 @@
 	margin: 10px;
 }
 
-.text-vertical-centered {
+.goal-detail-label, .goal-detail-field {
   position: relative;
-  top: 2px;
   color: white;
-//	color: #2ba6cb;
+  font-size: 1.5em;
+}
+
+.goal-detail-field {
+  border-bottom: 1px dotted white;
+}
+
+.goal-detail-label {
+  border-right: 1px solid #2ba6cb;
+  border-bottom: 1px solid #2ba6cb;
 }
 
 .centered {
 	text-align: center;
-}
-
-.centered h3 {
 }
 
 input[type="text"], {
@@ -41,6 +46,7 @@ input[type="text"]:focus, input[type="date"]:focus, textarea:focus{
 
 textarea {
 	height: 100px;
+  resize: none;
 }
 
 .top-bar {
@@ -96,7 +102,7 @@ div.description-row {
 }
 
 h2,h3,h4,h5 {
-  font-family: "HelveticaNeue-Light";
+  font-family: "HelveticaNeue-UltraLight";
 }
 
 h1 {
@@ -113,9 +119,8 @@ body {
   font-weight: lighter;
 }
 
-div.label h5, div.value h5 {
-  //color: #2ba6cb;
-  color: white;
+.new-detail-field{
+  top: 4px;
 }
 
 div.label {
@@ -132,6 +137,40 @@ div#current-goals {
   border-bottom: 7px ridge #2ba6cb;
 }
 
+.goal-detail-add {
+  padding: 20px 20px 0px 20px;
+  margin-top: 10px;
+}
+
+.goal-detail-edit {
+  padding: 10px 20px 0px 20px;
+  margin-top: 0px;
+  color: white;
+}
+
+.goal-detail-edit .radio-label {
+  text-align: center;
+	font-weight: normal;
+	width: 126px;
+	height: 3.2em;
+	display: inline-block;
+	margin-bottom: 12px;
+	background-color: #999999;
+	color: white;
+	vertical-align: middle;
+	margin-left: 2px;
+	font-size: 16px;
+	line-height: 3em;
+}
+
+h3.new-detail-field {
+  font-family: "HelveticaNeue-Light";
+}
+
+h3.edit-detail-field {
+  color: white;
+}
+
 .goal-name h1 {
   position: relative;
   top: 5px;
@@ -146,4 +185,72 @@ div#current-goals {
 }
 
 #new-goal-name{
+}
+
+input.bottom-bordered {
+  border-bottom: 7px ridge #2ba6cb;
+}
+
+div.navbar-row{
+  border-bottom: 3px ridge #2ba6cb;
+  position: fixed;
+  top: 43px;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+}
+
+.top-bar-section ul li a {
+  font-weight: normal;
+  color: #eee;
+  font-family: 'HelveticaNeue-Light';
+}
+
+.top-bar-section ul li a:hover {
+  color: white;
+}
+
+.top-bar-section ul li.active a, .top-bar-section ul li.hover a {
+  background-image:url(image_path('grey_wash_wall.png'));
+}
+
+.detail-minor {
+}
+
+div.completed-false {
+}
+
+div.completed-true {
+}
+
+div#archive-button, div#delete-button {
+  position:absolute;
+  right: 10px;
+  bottom: -25px;
+  padding: 5px;
+  width: 80px;
+  background-color: #2ba6cb;
+  text-align: center;
+}
+
+div#delete-button {
+  position:absolute;
+  right: 120px;
+  background-color: #2ba6cb;
+}
+
+div.name-container {
+  position: relative;
+}
+
+nav.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+}
+
+div.new-goal-container {
+  margin-top: 40px;
 }

@@ -7,7 +7,9 @@ ST.Views.NewGoalView = Backbone.View.extend({
 
 	events: {
 		'click #goal-detail-button': 'appendDetail',
-		'keypress #new-goal-name': 'filterOnEnter'
+    'click #save-button': 'saveNewGoal',
+		'keypress #new-goal-name': 'filterOnEnter',
+    'keypress #finish_date': 'filterOnEnter',
 	},
 
 	render: function() {
@@ -28,6 +30,13 @@ ST.Views.NewGoalView = Backbone.View.extend({
     return year + "-" + month + "-" + date;
   },
 
+  changeEditButton: function(){
+    var buttonString =
+      "<button id='save-button'>Add Goal</button>"
+    $('#goal-detail-button').remove();
+    $('#new-goal-input').append(buttonString);
+  },
+
 	addDetail: function($detailEl) {
 		var renderedDetailContent = JST['goals/newDetails']({
 			goal: this.model,
@@ -35,9 +44,13 @@ ST.Views.NewGoalView = Backbone.View.extend({
       todayString: this.todayDate()
 		});
 
+    $('#new-goal-name').removeClass("bottom-bordered");
+
 		$detailEl.addClass("row");
 
 		$detailEl.append(renderedDetailContent);
+
+    this.changeEditButton();
 
 		return $detailEl;
 	},
@@ -82,6 +95,7 @@ ST.Views.NewGoalView = Backbone.View.extend({
 		that.model.set({
 			name: $('#new-goal-name').val(),
 			finished: "false",
+      archived: "false",
       time_frame_id: timeFrameChecked,
       finish_date: $('#finish_date').val(),
       description: $('#goal_description').val(),
