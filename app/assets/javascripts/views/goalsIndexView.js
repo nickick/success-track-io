@@ -4,13 +4,16 @@ ST.Views.IndexGoalView = Backbone.View.extend({
 	events: {
 		"click .button"              : "show",
 		"click .finished-clickable"  : "switchFinished",
-    "keypress #search_bar"       : "searchFilter"
 	},
 
 	render: function() {
 		var that = this;
     that.collection = that.collection.filterStatus(
       that.pathToFilter[that.currentPath()]
+    );
+
+    that.collection = that.collection.filterSearch(
+      this.options.search
     );
 
     var renderedTopContent = JST["goals/index"]({
@@ -30,12 +33,6 @@ ST.Views.IndexGoalView = Backbone.View.extend({
 
 		return that;
 	},
-
-  navBarAppend: function() {
-    $('#search_bar_anchor').append(
-      '<input type="text" id="search_bar" placeholder="Search through tags and titles">'
-    )
-  },
 
   appendSideView: function($el) {
     var sideBarView = new ST.Views.SideBarView({
@@ -62,8 +59,4 @@ ST.Views.IndexGoalView = Backbone.View.extend({
 	show: function(){
 		$('#new-goal').fadeIn(200);
 	},
-
-	switchFinished: function(e) {
-
-	}
 })

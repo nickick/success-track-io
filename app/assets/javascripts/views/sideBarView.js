@@ -18,7 +18,6 @@ ST.Views.SideBarView = Backbone.View.extend({
   },
 
   growNode: function(e) {
-    console.log(e.target);
     $(e.target).addClass('focus-node', 100);
     $($(e.target).closest('li')).addClass('focus-node', 100);
   },

@@ -28,7 +28,7 @@ ST.Views.GoalDetailView = Backbone.View.extend({
     "dblclick .goal-tag"                      : "editTag",
     "dblclick .edit-tag"                      : "deleteTag",
     "dblclick .goal-tag-label"                : "addNewTagInput",
-    "keypress .tag-input"                     : "saveNewTag",
+    "keyup .tag-input"                        : "saveNewTag",
     "blur .tag-input"                         : "render"
 	},
 
@@ -244,17 +244,15 @@ ST.Views.GoalDetailView = Backbone.View.extend({
       });
       var tagCollection = this.model.get('tags') || new ST.Collections.TagCollection();
       tagCollection.add(newTag);
-      this.model.set({
-        tags: tagCollection
-      });
+      this.model.get('tags').add(newTag);
       var that = this
-      that.model.save({},{
+      newTag.save({},{
         success: function(model) {
           ST.Store.indexTags.add(newTag);
           newTag.set({
-            id: model.get('tags_attributes').id
+            id: model.get('id')
           })
-        }
+        },
       });
     };
   },

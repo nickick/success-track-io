@@ -1,25 +1,25 @@
 ST.Routers.GoalsRouter = Backbone.Router.extend({
 
   routes: {
-    ""          : "index",
-    "completed" : "index",
-    "active"    : "index",
-    "archived"  : "index"
+    ""          : "renderPage",
+    "completed" : "renderPage",
+    "active"    : "renderPage",
+    "archived"  : "renderPage"
   },
 
-	initialize: function($contentDiv, $newGoalDiv){
-		this.$contentDiv = $contentDiv;
+	initialize: function($navBar, $contentDiv, $newGoalDiv){
+		this.$navBar = $navBar;
+    this.$contentDiv = $contentDiv;
 		this.$newGoalDiv = $newGoalDiv;
+    this.attachNavBar();
 		this.index();
-
     this.listenTo(ST.Store.indexGoals, "add", this.index);
+    this.listenTo(ST.Store.searchString, "change", this.index);
 	},
 
-  selectNavLi: function() {
-    $('.active').removeClass('active');
-    var url = window.location.href;
-    var pathString = 'a[href="/' + url.split('/')[3] + '"]';
-    $(pathString).parent().addClass('active');
+  renderPage: function() {
+    this.index();
+    this.attachNavBar();
   },
 
   newGoalBox: function() {
@@ -32,13 +32,18 @@ ST.Routers.GoalsRouter = Backbone.Router.extend({
     this.$newGoalDiv.html(newGoalView.render().$el);
   },
 
+  attachNavBar: function() {
+    var navBarView = new ST.Views.NavBarView();
+    this.$navBar.html(navBarView.render().$el);
+  },
+
 	index: function(){
-    this.selectNavLi();
 		var indexGoalView = new ST.Views.IndexGoalView({
-			collection: ST.Store.indexGoals
+			collection: ST.Store.indexGoals,
+      search: ST.Store.searchString.get('string') || 'none'
 		});
+
     this.$contentDiv.html(indexGoalView.render().$el);
     this.newGoalBox();
-
 	},
 });

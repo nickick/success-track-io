@@ -1,3 +1,4 @@
+<div id="navbar"></div>
 <div class="side-nav"></div>
 <div id="new-goal"> </div>
 <div id="current-goals"> </div>
@@ -9,7 +10,7 @@
       tags: <%= @tags.to_json.html_safe %>,
 		}
 		var allTimeFrames = <%= @time_frames.to_json.html_safe %>;
-		window.ST.initialize($('#current-goals'), $('#new-goal'), indexGoalsData, allTimeFrames);
+		window.ST.initialize($('#navbar'), $('#current-goals'), $('#new-goal'), indexGoalsData, allTimeFrames);
     Backbone.history.navigate("#");
 	});
 </script>

@@ -1,0 +1,45 @@
+<nav class="top-bar">
+  <ul class="title-area">
+    <!-- Title Area -->
+    <li class="title">
+      <h1><a href="#"><span id="title-highlight">success</span> track.io</a></h1>
+    </li>
+  </ul>
+  <section class="top-bar-section">
+    <!-- Left Nav Section -->
+    <ul class="left">
+      <li class="divider"></li>
+      <% if (ST.Store.indexGoals.length > 0){ %>
+        <li><a href="/#">All Goals</a></li>
+        <li class="divider"></li>
+      <% }%>
+      <% if (ST.Store.indexGoals.filterStatus(false).length > 0){ %>
+        <li><a href="/#active">Active</a></li>
+        <li class="divider"></li>
+      <% }%>
+      <% if (ST.Store.indexGoals.filterStatus(true).length > 0){ %>
+        <li><a href="/#completed">Completed</a></li>
+        <li class="divider"></li>
+      <% }%>
+      <% if (ST.Store.indexGoals.filterStatus("archived").length > 0){ %>
+        <li><a href="/#archived">Archived</a></li>
+        <li class="divider"></li>
+      <% }%>
+      <li id="search_bar_anchor"></li>
+    </ul>
+    <ul class="right">
+      <% if (ST.Store.indexGoals.length > 0){ %>
+        <li>
+          <input type="text" id="search_bar" placeholder="Search tags, titles, description">
+        </li>
+      <% }%>
+      <li><a class="disclaimer">Optimized for Mac OS X Chrome</a></li>
+      <li class="divider hide-for-small"></li>
+      <li>
+        <a href="/users/sign_out" data-method="delete" rel="nofollow">Sign out</a>
+      </li>
+    </ul>
+  </section>
+</nav>
+<div class="navbar-row">
+</div>
