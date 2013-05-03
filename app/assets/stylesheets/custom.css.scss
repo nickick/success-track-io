@@ -60,7 +60,7 @@ input[type="text"].detail-input:focus, input[type="date"].detail-input:focus {
   background-color: #222222;
 }
 
-#new_goal_detail input[type="text"], textarea{
+#new_goal_detail input[type="text"]{
 	height: 3.1em;
 	font-size: 1em;
 	margin-bottom: 20px;
@@ -72,7 +72,8 @@ input[type="text"]:focus, input[type="date"]:focus, textarea:focus{
 };
 
 textarea {
-	height: 100px;
+  font-size: 1em;
+  height: 70px;
   resize: none;
 }
 
@@ -167,7 +168,9 @@ body {
 }
 
 .new-detail-field{
-  top: 4px;
+  position: relative;
+  top: 3px;
+  text-align: right;
 }
 
 div.label {
@@ -223,7 +226,7 @@ h3.edit-detail-field {
   top: 5px;
 }
 
-.goal-detail-top, .goal-detail-bottom{
+.goal-detail-top, .goal-detail-section, .goal-detail-bottom{
   background-image:url(image_path('grey_wash_wall.png'));
   //background-color: #2ba6cb;
 }
@@ -277,6 +280,10 @@ div.completed-false {
 div.completed-true {
 }
 
+.goal-footer {
+  position: relative;
+}
+
 div#archive-button, div#delete-button {
   position:absolute;
   right: 15px;
@@ -325,15 +332,10 @@ button#save-button {
   top: -30px;
 }
 
-//.goal-status-clickable:hover, .goal-description-clickable:hover, .goal-finish-date-clickable:hover, .goal-time-frame-clickable:hover{
-//  cursor: pointer;
-//}
-
 .finished {
   padding: 10px;
   text-align: center;
   font-family: "HelveticaNeue-Light";
-  background-color: #aaa;
 }
 
 .finished:hover {
@@ -342,10 +344,12 @@ button#save-button {
 
 .completed-button {
   color: #247800;
+  background-color: #aaa;
 }
 
 .incomplete-button {
   color: #8b0700;
+  background-color: #aaa;
 }
 
 div.error-container {
@@ -356,4 +360,126 @@ div.error-container {
 
 .errors {
   color: red;
+}
+
+div.potential-tags {
+  text-align: right;
+  top: -5px;
+  right: 10px;
+}
+
+div.potential-tags p {
+  margin: 0px;
+  color: #aaa;
+}
+
+div.current-tags {
+  top: -5px;
+}
+
+div.added-tag {
+  color: white;
+  background-color: #2ba6cb;
+  border-radius: 2px;
+  padding: 5px;
+  float: left;
+  margin-left: 5px;
+  margin-top: 5px;
+  text-align: center;
+}
+
+div.goal-tag, div.goal-tag-label{
+  color: white;
+  background-color: #2ba6cb;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  border-bottom-left-radius: 6px;
+  padding: 5px 10px 5px 10px;
+  float: right;
+  margin-left: 5px;
+  text-align: right;
+  position: absolute;
+  z-index: 2;
+  display: inline-block;
+}
+
+div.goal-tag-label{
+	background-image:url(image_path('navy_blue.png'));
+  color: white;
+  top: 40px;
+  right: -85px;
+  font-family: "HelveticaNeue-UltraLight", "Helvetica";
+  padding-left: 0px;
+}
+
+div.tag-container {
+  height: 30px;
+  position: relative;
+  text-align: right;
+}
+
+span {
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  overflow: inherit;
+}
+
+ul.side-nav {
+  position: fixed;
+  top: 40px;
+}
+
+ul.side-nav a li {
+  border-bottom-right-radius: 10px;
+  background-color: #2ba6cb;
+  color: white;
+  box-shadow: 0px 0px 20px 2px #2ba6cb;
+  z-index: 4;
+  text-overflow:ellipsis;
+  padding-right: 5px;
+}
+
+
+ul.side-nav li:hover {
+  background-color: white;
+  color: #2ba6cb;
+  box-shadow: 0px 0px 20px 2px white;
+}
+
+ul.side-nav li a {
+
+}
+
+div.goal-node-container {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 40px;
+}
+
+.focus-node {
+  min-width: 200px;
+}
+
+.added-tag:hover {
+  cursor: pointer;
+}
+
+div.goal-tag.edit-tag {
+  background-color: red;
+}
+
+div.goal-tag.edit-tag:hover{
+  cursor: pointer;
+}
+
+input.tag-input {
+  color: black;
+  position: absolute;
+  top: -5px;
+  left: -60px;
+  width: 150px;
+  height: 2em;
+  text: 1em;
+
+  font-family: "HelveticaNeue-UltraLight", "Helvetica";
 }

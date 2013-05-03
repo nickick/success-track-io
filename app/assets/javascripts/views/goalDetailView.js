@@ -2,12 +2,15 @@ ST.Views.GoalDetailView = Backbone.View.extend({
 	initialize: function() {
 		this.listenTo(this.model, "change", this.render);
     this.listenTo(this.model, "request", this.render);
+    this.listenTo(ST.Store.indexTags, "remove", this.render);
+    this.listenTo(ST.Store.indexTags, "add", this.render);
     this.editBooleans = {
       timeFrameEdit: false,
       finishDateEdit: false,
       statusEdit: false,
       nameEdit: false,
-      descriptionEdit:false
+      descriptionEdit:false,
+      tagEdit: false,
     }
 	},
 
@@ -21,7 +24,12 @@ ST.Views.GoalDetailView = Backbone.View.extend({
     "dblclick .goal-finish-date-clickable"    : "finishDateEdit",
     "dblclick .edit-radio-label"              : "updateGoal",
     "keypress"                                : "filterOnEnter",
-    "mouseover .goal-status-clickable"        : "installClickStatusHandler"
+    "mouseover .goal-status-clickable"        : "installClickStatusHandler",
+    "dblclick .goal-tag"                      : "editTag",
+    "dblclick .edit-tag"                      : "deleteTag",
+    "dblclick .goal-tag-label"                : "addNewTagInput",
+    "keypress .tag-input"                     : "saveNewTag",
+    "blur .tag-input"                         : "render"
 	},
 
 	render: function() {
@@ -29,12 +37,45 @@ ST.Views.GoalDetailView = Backbone.View.extend({
 			goal: this.model,
 			finished: this.model.escape("finished"),
       timeFrames: ST.Store.timeFrames,
-      currentPath: this.currentPath()
+      currentPath: this.currentPath(),
 		})
+
 		this.$el.html(renderedContent);
+    this.insertTags();
 
 		return this;
 	},
+
+  insertTags: function() {
+    var tags = this.filterTagsforGoal();
+    var topOffset = 70;
+    var rightOffset = parseInt($('.name-container').width()) + 20;
+    var that = this;
+  	setTimeout(function(){
+      if (tags.length > 0) {
+        $('#goal-'+that.model.get('id')+'-tags').append(
+          "<div class='goal-tag-label'> <span>Tagged as</span> </div>"
+        );
+      } else {
+        $('#goal-'+that.model.get('id')+'-tags').append(
+          "<div class='goal-tag-label'> <span>Add tags!</span> </div>"
+        );
+      };
+      tags.each(function(tag) {
+        var styleString = 'top: '+topOffset+'px;';
+        var title = tag.escape('title');
+        var tagDiv = "<div class='goal-tag' id= '"+ tag.get('id') +
+        "'style='"+styleString+
+        "'><span>"+title+"</span></div>";
+        $('#goal-'+that.model.get('id')+'-tags').append(tagDiv);
+        topOffset += 40;
+      });
+    }, 200);
+  },
+
+  filterTagsforGoal: function() {
+    return this.model.tags();
+  },
 
   installClickStatusHandler: function() {
     var that = this;
@@ -43,18 +84,6 @@ ST.Views.GoalDetailView = Backbone.View.extend({
       $('#finish-switch-'+that.model.get('id')).click();
     });
   },
-
-  viewFade: function(){
-    this.$el.slideUp();
-  },
-
-  new_bool: function(current_bool) {
-		if (current_bool == "true") {
-			return false;
-		} else {
-			return true;
-		}
-	},
 
   currentPath: function() {
     var url = window.location.href;
@@ -68,6 +97,38 @@ ST.Views.GoalDetailView = Backbone.View.extend({
     };
     return false;
   },
+
+  // ARCHIVE & DELETE METHODS //
+
+  new_bool: function(current_bool) {
+		if (current_bool == "true") {
+			return false;
+		} else {
+			return true;
+		}
+	},
+
+  viewFade: function(){
+    this.$el.slideUp();
+  },
+
+  deleteGoal: function() {
+    this.viewFade();
+    ST.Store.indexGoals.remove(this.model);
+    this.model.destroy();
+  },
+
+  archiveGoal: function() {
+		var that = this;
+    that.viewFade();
+		var current_archive = that.model.escape("archived")
+		that.model.set({
+			archived: that.new_bool(current_archive)
+		});
+		that.model.save();
+  },
+
+  // UPDATE METHODS //
 
   switchFinish: function() {
 		var that = this;
@@ -84,7 +145,7 @@ ST.Views.GoalDetailView = Backbone.View.extend({
 	chooseTimeFrame: function() {
     if (!this.editBooleans['timeFrameEdit']){
       this.editBooleans['timeFrameEdit'] = true;
-  		var renderedContent = JST["goals/editDetailGoal"]({
+  		var renderedContent = JST["goals/editTimeFrame"]({
   			goal: this.model,
   			finished: this.model.escape("finished"),
         timeFrames: ST.Store.timeFrames,
@@ -99,21 +160,6 @@ ST.Views.GoalDetailView = Backbone.View.extend({
 
 		return this;
 	},
-
-  deleteGoal: function() {
-    this.viewFade();
-    this.model.destroy();
-  },
-
-  archiveGoal: function() {
-		var that = this;
-    that.viewFade();
-		var current_archive = that.model.escape("archived")
-		that.model.set({
-			archived: that.new_bool(current_archive)
-		});
-		that.model.save();
-  },
 
   descriptionEdit: function() {
     if (!this.editBooleans['descriptionEdit']){
@@ -168,6 +214,50 @@ ST.Views.GoalDetailView = Backbone.View.extend({
     $(timeFrameEditString).slideUp(100).addClass('hidden');
   },
 
+  editTag: function(e) {
+    if (!this.editBooleans['tagEdit']){
+      this.editBooleans['tagEdit'] = true;
+      $($(e.target).closest('div')).addClass('edit-tag');
+    };
+  },
+
+  deleteTag: function(e) {
+    var tag = $($(e.target).closest('div'));
+    var tag_id = parseInt($(tag).attr('id'));
+    console.log(tag_id);
+    var tag_model = ST.Store.indexTags.findWhere({id: tag_id});
+    ST.Store.indexTags.remove(tag_model);
+    tag_model.destroy();
+    tag.empty();
+    this.editBooleans['tagEdit'] = true;
+  },
+
+  addNewTagInput: function(e) {
+    var inputString = "<input type='text' class='tag-input'>";
+    $(e.target).closest('span').empty();
+    $(e.target).closest('span').html(inputString);
+    $('.tag-input').focus();
+  },
+
+  savingTag: false,
+
+  saveNewTag: function(e) {
+    if (e.keyCode == 13) {
+      if (!this.savingTag) {
+        this.savingTag = true;
+        var newTag = new ST.Models.TagModel({title: $(e.target).val()});
+        var tagCollection = this.model.get('tags') || new ST.Collections.TagCollection();
+        tagCollection.add(newTag);
+        this.model.set({
+          tags: tagCollection
+        });
+        this.model.save({},{
+          success: function() {ST.Store.indexTags.add(newTag)}
+        })
+      };
+    };
+  },
+
   updateGoal: function() {
     var that = this;
     var $timeFrames = $("[name='time_frame_"+that.model.get('id')+"']");
@@ -191,7 +281,8 @@ ST.Views.GoalDetailView = Backbone.View.extend({
         finishDateEdit: false,
         statusEdit: false,
         nameEdit: false,
-        descriptionEdit:false
+        descriptionEdit:false,
+        tagEdit: false
       };
     }, 100);
   },

@@ -1,0 +1,19 @@
+<div class="large-12 goal-detail-edit time-frame-edit-<%= goal.escape('id')%> hidden">
+  <!-- time frame -->
+	<div class="field large-12 columns">
+		<ul class="button-group">
+			<% timeFrames.each(function(timeFrame) { %>
+				<% var frame = timeFrame.escape('frame') %>
+        <% var timeFrameId = timeFrame.escape('id')%>
+        <% var goalTimeId = goal.escape('time_frame_id') %>
+        <% var goalId = goal.escape('id') %>
+				<% if (timeFrameId == goalTimeId) {%>
+					<input type="radio" name="time_frame_<%=goalId%>" id="<%= frame %>_radio_for_goal_<%= goalId %>" value="<%= timeFrameId %>" checked >
+				<%} else {%>
+					<input type="radio" name="time_frame_<%=goalId%>" id="<%= frame %>_radio_for_goal_<%= goalId %>" value="<%= timeFrameId %>">
+				<% } %>
+				<label class="edit-radio-label" for="<%= frame %>_radio_for_goal_<%= goalId %>"><%= frame %></label>
+			<% }) %>
+		</ul>
+	</div>
+</div>

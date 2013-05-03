@@ -1,11 +1,17 @@
+<div class="side-nav"></div>
 <div id="new-goal"> </div>
 <div id="current-goals"> </div>
 
+
+
 <script type="text/javascript">
 	$( function() {
-		var indexGoalsData = <%= @goals.to_json.html_safe %>;
+		var indexGoalsData = {
+		  goals: <%= @goals.to_json.html_safe %>,
+      tags: <%= @tags.to_json.html_safe %>,
+		}
 		var allTimeFrames = <%= @time_frames.to_json.html_safe %>;
-		window.ST.initialize($('#current-goals'), $('#new-goal'), indexGoalsData , allTimeFrames);
+		window.ST.initialize($('#current-goals'), $('#new-goal'), indexGoalsData, allTimeFrames);
     Backbone.history.navigate("#");
 	});
 </script>

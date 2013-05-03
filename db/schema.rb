@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130501035616) do
+ActiveRecord::Schema.define(:version => 20130502055628) do
+
+  create_table "goal_tags", :force => true do |t|
+    t.integer  "goal_id"
+    t.integer  "tag_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "goals", :force => true do |t|
     t.string   "name"
@@ -24,6 +31,13 @@ ActiveRecord::Schema.define(:version => 20130501035616) do
     t.integer  "time_frame_id"
     t.boolean  "finished"
     t.boolean  "archived"
+  end
+
+  create_table "tags", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "goal_id"
   end
 
   create_table "time_frames", :force => true do |t|

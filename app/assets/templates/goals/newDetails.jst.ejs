@@ -27,17 +27,26 @@
 			<label for="finish_date"><h3 class="new-detail-field">Finish Date</h3></label>
 		</div>
 		<div class="field large-10 columns">
-      <% console.log(todayString)%>
 			<input type="date" id="finish_date" min=<%= todayString %> value=<%= todayString %> tabindex=3>
 		</div>
     <!-- description -->
 		<div class="label large-2 columns">
-			<label for="goal_name"><h3 class="new-detail-field">Description</h3></label>
+			<label for="goal_description"><h3 class="new-detail-field">Description</h3></label>
 		</div>
 		<div class="field large-10 columns">
-			<textarea rows="4"
-        placeholder="Run around the Charles under 6:30 at least 3 times per week"
+			<textarea rows="3"
+        placeholder="Describe your goal with a few extra details"
         id="goal_description" tabindex=4></textarea>
 		</div>
+    <!-- tags -->
+		<div class="label large-2 columns">
+			<label for="goal_tags"><h3 class="new-detail-field">Tags</h3></label>
+		</div>
+		<div class="field large-10 columns">
+			<input type="text" placeholder="Press enter to input this tag" id="goal_tags" tabindex=5></textarea>
+		</div>
+    <div class="large-2 columns"> &nbsp;</div>
+    <div class="large-6 columns current-tags"> &nbsp;</div>
+    <div class="large-4 columns potential-tags"><p>i.e. programming, fitness, life, finance</p></div>
 	</div>
 </div>

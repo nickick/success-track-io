@@ -7,11 +7,13 @@ ST.Views.NewGoalView = Backbone.View.extend({
 	},
 
 	events: {
-		'click #goal-detail-button': 'appendDetail',
-    'click #save-button': 'saveNewGoal',
-		'keypress #new-goal-name': 'filterOnEnter',
-    'keypress #finish_date': 'filterOnEnter',
-    'keypress #save-button' : 'saveNewGoal'
+		'click #goal-detail-button' : 'appendDetail',
+    'click #save-button'        : 'saveNewGoal',
+    'keypress #save-button'     : 'saveNewGoal',
+		'keypress #new-goal-name'   : 'filterOnEnter',
+    'keypress #finish_date'     : 'filterOnEnter',
+    'keypress #goal_tags'       : 'tagCreate',
+    'click .added-tag'          : 'removeAddedTag',
 	},
 
 	render: function() {
@@ -89,32 +91,88 @@ ST.Views.NewGoalView = Backbone.View.extend({
     return finValue;
   },
 
+  tagCreate: function(e) {
+    if (e.keyCode != 13) { return };
+    this.addTag();
+  },
+
+  appendTagDiv: function(input) {
+    var tagDiv = "<div class='added-tag'><span>"+input+"</span></div>"
+    $('.current-tags').append(tagDiv);
+    $('#goal_tags').val('');
+  },
+
+  removeAddedTag: function(e) {
+    var deletingTag = this.model.get('tags').findWhere({title: $(e.target).text()});
+    var tagCollection = this.model.get('tags');
+    tagCollection.remove(deletingTag);
+    $(e.target).closest('div').remove();
+  },
+
+  createTag: function(input) {
+    var tag = new ST.Models.TagModel({
+      title: input,
+      goal_id: this.model.get('id')
+    });
+    ST.Store.indexTags.add(tag);
+    return tag;
+  },
+
+  addTag: function() {
+    var that = this;
+    var input = $('#goal_tags').val();
+    if (input.length > 0) {
+      that.appendTagDiv(input);
+      var tag = that.createTag(input);
+      if (that.model.get('tags')){
+        var tagCollection = that.model.get('tags');
+      } else {
+        var tagCollection = that.model.tags() || new ST.Collections.TagCollection();
+      };
+      tagCollection.add(tag);
+      that.model.set({
+        tags: tagCollection
+      });
+    };
+  },
+
+  savingNow: false,
+
 	saveNewGoal: function() {
 		this.nameGoalOnly = true;
-    var $timeFrames = $('[name="time_frame"]');
-    var timeFrameChecked = this.findCheckedFrameId($timeFrames);
-		var that = this;
-		that.model.set({
-			name: $('#new-goal-name').val(),
-			finished: "false",
-      archived: "false",
-      time_frame_id: timeFrameChecked,
-      finish_date: $('#finish_date').val(),
-      description: $('#goal_description').val(),
-
-		});
-		that.model.save({},{
-			success: function() {
-				ST.Store.indexGoals.add(that.model);
-			},
-      error: function(model, xhr) {
-        $('.error-container').html('<div class="errors">'+xhr.responseText+'</div><br>');
-        $('.error-container').slideDown();
-        var nameError = "Name can't be blank"
-        if (xhr.responseText.indexOf(nameError) != -1) {
-          $('#new-goal-name').focus();
+    if (!this.savingNow) {
+      this.savingNow = true;
+      var $timeFrames = $('[name="time_frame"]');
+      var timeFrameChecked = this.findCheckedFrameId($timeFrames);
+  		var that = this;
+  		that.model.set({
+         name: $('#new-goal-name').val(),
+         finished: "false",
+         archived: "false",
+         time_frame_id: timeFrameChecked,
+         finish_date: $('#finish_date').val(),
+         description: $('#goal_description').val(),
+      });
+  	  that.model.save({},{
+        success: function() {
+          var self = that;
+          var indexTags = new ST.Collections.TagCollection();
+          indexTags.fetch({
+            success: function() {
+              ST.Store.indexTags = indexTags;
+              ST.Store.indexGoals.add(self.model);
+            }
+          });
         }
-      }
-		});
+          // error: function(model, xhr) {
+  //           $('.error-container').html('<div class="errors">'+xhr.responseText+'</div><br>');
+  //           $('.error-container').slideDown();
+  //           var nameError = "Name can't be blank"
+  //           if (xhr.responseText.indexOf(nameError) != -1) {
+  //             $('#new-goal-name').focus();
+  //           }
+  //         }
+      });
+    }
 	}
 });

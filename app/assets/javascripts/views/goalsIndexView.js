@@ -1,4 +1,5 @@
 ST.Views.IndexGoalView = Backbone.View.extend({
+  navLinkNodes: [],
 
 	events: {
 		"click .button": "show",
@@ -11,7 +12,7 @@ ST.Views.IndexGoalView = Backbone.View.extend({
       that.pathToFilter[that.currentPath()]
     );
 
-		var renderedTopContent = JST["goals/index"]({
+    var renderedTopContent = JST["goals/index"]({
 			goals: that.collection
 		});
 		that.$el.html(renderedTopContent);
@@ -22,10 +23,20 @@ ST.Views.IndexGoalView = Backbone.View.extend({
 			})
 			that.$el.append(goalDetailView.render().$el);
       that.$el.fadeIn(300);
-		})
+		});
+
+    that.appendSideView($('.side-nav'));
 
 		return that;
 	},
+
+  appendSideView: function($el) {
+    var sideBarView = new ST.Views.SideBarView({
+      collection: this.collection
+    })
+
+    $el.html(sideBarView.render().$el);
+  },
 
   pathToFilter: {
     '#' : 'all',

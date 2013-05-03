@@ -7,9 +7,13 @@ class GoalsController < ApplicationController
   def index
     @goals = Goal.where("user_id = ?", current_user.id)
     @time_frames = TimeFrame.all
+    @tags = Tag.all
   end
 
   def create
+    if params[:goal][:tags_attributes].nil?
+      params[:goal].delete(:tags_attributes)
+    end
     params[:goal][:user_id] = current_user.id
     @goal = Goal.new(params[:goal])
     if @goal.save
@@ -20,6 +24,9 @@ class GoalsController < ApplicationController
   end
 
   def update
+    if params[:goal][:tags_attributes].nil?
+      params[:goal].delete(:tags_attributes)
+    end
     @goal = Goal.find(params[:id])
     if @goal.update_attributes(params[:goal])
       render :json => @goal

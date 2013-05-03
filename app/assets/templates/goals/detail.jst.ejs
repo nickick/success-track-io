@@ -1,4 +1,6 @@
-<div class="completed-<%= goal.escape('finished') %>">
+<div class="completed-<%= goal.escape('finished') %>" id="#goal-<%= goal.escape('id') %>">
+  <div class="row small-12 columns tag-container" id="goal-<%=goal.get('id')%>-tags">
+  </div>
   <div class="row goal-name">
     <div class="row centered name-container">
     	<h1 id="goal-<%=goal.escape('id')%>-name"><%= goal.escape("name") %></h1>
@@ -51,9 +53,9 @@
   	</div>
   </div>
 </div>
-    <!-- Description -->
+<!-- Description -->
 <div class="completed-<%= goal.escape('finished') %>">
-  <div class="row goal-detail-bottom" id="goal_<%= goal.escape("id") %>_detail">
+  <div class="row goal-detail-section" id="goal_<%= goal.escape("id") %>_detail">
     <div class="large-12 large-centered columns">
   		<div class="description-row">
         <div class="large-12">
@@ -69,14 +71,26 @@
   				</div>
         </div>
   		</div>
-      <div id="delete-button">Delete</div>
-      <% if (currentPath == "#archived") {%>
-        <div id="archive-button">Unarchive</div>
-      <%} else {%>
-        <div id="archive-button">Archive</div>
-      <% } %>
     </div>
   </div>
   <div class="goal-<%= goal.escape('finished')%>-errors">
+  </div>
+</div>
+<div class="completed-<%= goal.escape('finished') %>">
+  <div class="row goal-detail-section" id="goal_<%= goal.escape("id") %>_detail">
+  </div>
+</div>
+<div class="completed-<%= goal.escape('finished') %>">
+  <div class="row goal-detail-bottom" id="goal_<%= goal.escape("id") %>_detail">
+    <div class="goal-<%= goal.escape('finished')%>-errors">
+    </div>
+    <div class="goal-footer large-12">
+      <div id="delete-button">Delete</div>
+        <% if (currentPath == "#archived") {%>
+      <div id="archive-button">Unarchive</div>
+        <%} else {%>
+      <div id="archive-button">Archive</div>
+        <% } %>
+    </div>
   </div>
 </div>

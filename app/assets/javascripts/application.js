@@ -16,6 +16,8 @@
 //
 //= require underscore-min
 //= require backbone-min
+//= require backbone-relational
+//= require d3.v3.min
 //
 //= require st
 //

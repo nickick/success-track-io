@@ -1,0 +1,12 @@
+<% var height = ($(window).height() / totalGoals - 5); %>
+<% if (goals.length > 3) {%>
+  <% goals.each(function(goal) { %>
+    <div style= 'height: <%= height %>px' class='goal-node-container'>
+      <a href="#goal-<%= goal.escape('id') %>">
+        <li id='<%= goal.escape('id') %>' class="goal-node" title="<%= goal.escape('name')%>">
+          <span><%= goal.escape('name') %></span>
+        </li>
+      </a>
+    </div>
+  <% }); %>
+<% }; %>
