@@ -215,21 +215,17 @@ ST.Views.GoalDetailView = Backbone.View.extend({
   },
 
   editTag: function(e) {
-    if (!this.editBooleans['tagEdit']){
-      this.editBooleans['tagEdit'] = true;
-      $($(e.target).closest('div')).addClass('edit-tag');
-    };
+    $($(e.target).closest('div')).addClass('edit-tag');
   },
 
   deleteTag: function(e) {
     var tag = $($(e.target).closest('div'));
     var tag_id = parseInt($(tag).attr('id'));
-    console.log(tag_id);
     var tag_model = ST.Store.indexTags.findWhere({id: tag_id});
+    this.editBooleans['tagEdit'] = true;
     ST.Store.indexTags.remove(tag_model);
     tag_model.destroy();
     tag.empty();
-    this.editBooleans['tagEdit'] = true;
   },
 
   addNewTagInput: function(e) {
@@ -239,29 +235,27 @@ ST.Views.GoalDetailView = Backbone.View.extend({
     $('.tag-input').focus();
   },
 
-  savingTag: false,
-
   saveNewTag: function(e) {
     if (e.keyCode == 13) {
-      if (!this.savingTag) {
-        this.savingTag = true;
-        var newTag = new ST.Models.TagModel({title: $(e.target).val()});
-        var tagCollection = this.model.get('tags') || new ST.Collections.TagCollection();
-        tagCollection.add(newTag);
-        this.model.set({
-          tags: tagCollection
-        });
-        var that = this
-        that.model.save({},{
-          success: function(model) {
-            newTag.set({
-              //id: model.get('id')
-            })
-            ST.Store.indexTags.add(newTag)
-            that.savingTag = false
-          }
-        });
-      };
+      this.savingTag = true;
+      var newTag = new ST.Models.TagModel({
+        title: $(e.target).val(),
+        goal_id: this.model.get('id')
+      });
+      var tagCollection = this.model.get('tags') || new ST.Collections.TagCollection();
+      tagCollection.add(newTag);
+      this.model.set({
+        tags: tagCollection
+      });
+      var that = this
+      that.model.save({},{
+        success: function(model) {
+          ST.Store.indexTags.add(newTag);
+          newTag.set({
+            id: model.get('tags_attributes').id
+          })
+        }
+      });
     };
   },
 

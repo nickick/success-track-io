@@ -7,8 +7,8 @@ ST.Views.SideBarView = Backbone.View.extend({
 
   events: {
     "click .goal-node" : "bookmarkDirect",
-    // "mouseover .goal-node" : "growNode",
-//     "mouseout .goal-node" : "shrinkNode",
+    "mouseover .goal-node" : "growNode",
+    "mouseout .goal-node" : "shrinkNode",
   },
 
   bookmarkDirect: function(e){
@@ -20,10 +20,12 @@ ST.Views.SideBarView = Backbone.View.extend({
   growNode: function(e) {
     console.log(e.target);
     $(e.target).addClass('focus-node', 100);
+    $($(e.target).closest('li')).addClass('focus-node', 100);
   },
 
   shrinkNode: function(e) {
     $(e.target).removeClass('focus-node', 100);
+    $($(e.target).closest('li')).removeClass('focus-node', 100);
   },
 
   totalGoals: 0,
@@ -45,6 +47,9 @@ ST.Views.SideBarView = Backbone.View.extend({
 		this.$el.html(renderedContent);
 
     this.activateShortcutLinks();
+    this.$('a').click(function() {
+      event.preventDefault();
+    });
 		return this;
   },
 

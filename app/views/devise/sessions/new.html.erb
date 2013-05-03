@@ -1,21 +1,18 @@
-<div class = "row">
-	<div class = "small-3 small-centered columns">
-		<h2>Sign in</h2>
+<h2  class="title">Sign in</h2>
+<div class="row">
+	<div class="small-4 small-centered columns">
+		<form accept-charset="UTF-8" action="/users/sign_in" class="new_user" id="new_user" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="51VzcTSfzK+7rJYi03TTSPfhA3WDjotUpCDfrbvRNZY="></div>
+      <div class="devise_form"><label for="user_email">Email</label><br>
+      <input autofocus="autofocus" id="user_email" name="user[email]" size="30" type="email" value=""></div>
 
-		<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-		  <div><%= f.label :email %><br />
-		  <%= f.email_field :email, :autofocus => true %></div>
+      <div class="devise_form"><label for="user_password">Password</label><br>
+      <input id="user_password" name="user[password]" size="30" type="password"></div>
 
-		  <div><%= f.label :password %><br />
-		  <%= f.password_field :password %></div>
+    	<div class="devise_form"><input name="user[remember_me]" type="hidden" value="0"><input id="user_remember_me" name="user[remember_me]" type="checkbox" value="1"> <label for="user_remember_me">Remember me</label></div>
 
-		  <% if devise_mapping.rememberable? -%>
-		    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-		  <% end -%>
-
-		  <div><%= f.submit "Sign in" %></div>
-		<% end %>
-
-		<%= render "devise/shared/links" %>
+    	<div><input name="commit" type="submit" value="Sign in"></div>
+    </form>
+  <a href="/users/sign_up">Sign up</a><br>
+  <a href="/users/password/new">Forgot your password?</a><br>
 	</div>
-</div>	
+</div>

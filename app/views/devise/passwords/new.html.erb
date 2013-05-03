@@ -1,12 +1,17 @@
-<h2>Forgot your password?</h2>
+<h2 class="title">Forgot your password?</h2>
+<div class="row">
+	<div class="small-4 small-centered columns">
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+    <form accept-charset="UTF-8" action="/users/password" class="new_user" id="new_user" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="51VzcTSfzK+7rJYi03TTSPfhA3WDjotUpCDfrbvRNZY="></div>
 
-  <div><%= f.submit "Send me reset password instructions" %></div>
-<% end %>
 
-<%= render "devise/shared/links" %>
+      <div class="devise_form"><label for="user_email">Email</label><br>
+      <input autofocus="autofocus" id="user_email" name="user[email]" size="30" type="email" value=""></div>
+
+      <div class="devise_form"><input name="commit" type="submit" value="Send me reset password instructions"></div>
+    </form>
+
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

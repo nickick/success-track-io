@@ -37,8 +37,8 @@ ST.Routers.GoalsRouter = Backbone.Router.extend({
 		var indexGoalView = new ST.Views.IndexGoalView({
 			collection: ST.Store.indexGoals
 		});
-
+    this.$contentDiv.html(indexGoalView.render().$el);
     this.newGoalBox();
-		this.$contentDiv.html(indexGoalView.render().$el);
+
 	},
 });

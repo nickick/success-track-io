@@ -1,8 +1,8 @@
 <nav class="top-bar">
   <ul class="title-area">
     <!-- Title Area -->
-    <li class="name">
-      <h1><a href="#"><span style="font-size: 1.1em">success</span> track.io</a></h1>
+    <li class="title">
+      <h1><a href="#"><span id="title-highlight">success</span> track.io</a></h1>
     </li>
     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
     <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
@@ -12,37 +12,34 @@
     <!-- Left Nav Section -->
     <ul class="left">
       <li class="divider"></li>
+
       <li><a href="/#">All Goals</a></li>
       <li class="divider"></li>
-    </ul>
-    <ul class="left">
+
       <li><a href="/#active">Active</a></li>
       <li class="divider"></li>
-    </ul>
-    <ul class="left">
+
       <li><a href="/#completed">Completed</a></li>
       <li class="divider"></li>
-    </ul>
-    <ul class="left">
+
       <li><a href="/#archived">Archived</a></li>
       <li class="divider"></li>
-    </ul>
-		<% if notice || alert || flash[:notice] %>
-    <ul class="left notice">
-			<li><a href=#><%= notice %> <%= alert %> <%= flash[:notice] %></a></li>
-	    <li></div></li>
-			<li class="divider"></li>
-		</ul>
-		<% end %>
 
+      <li id="search_bar_anchor"></li>
+    </ul>
+		<!-- <% if notice || alert || flash[:notice] %>
+    <ul class="left notice">
+      <li><a href=#><%= notice %> <%= alert %> <%= flash[:notice] %></a></li>
+      <li></div></li>
+      <li class="divider"></li>
+    </ul>
+    <% end %> -->
     <!-- Right Nav Section -->
     <ul class="right">
+      <li><a class="disclaimer">Optimized for Mac OS X Chrome</a></li>
       <li class="divider hide-for-small"></li>
-      <li><a href="#">Profile</a>
-      <li class="has-form">
-				<form action="/users/sign_out" method="DELETE">
-        	<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-				</form>
+      <li>
+        <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
       </li>
     </ul>
   </section>

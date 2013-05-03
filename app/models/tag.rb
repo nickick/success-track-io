@@ -5,4 +5,5 @@ class Tag < ActiveRecord::Base
   accepts_nested_attributes_for :goal
 
   validates :title, :presence => true
+  validates_uniqueness_of :title, :scope => [:goal_id]
 end

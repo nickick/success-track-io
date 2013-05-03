@@ -2,6 +2,17 @@
 	margin: 10px;
 }
 
+#title-highlight {
+  font-family: "HelveticaNeue-UltraLight";
+  color: white;
+}
+
+.title {
+  font-size: 0.6em;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .goal-detail-label, .goal-detail-field-center, .goal-detail-field-left {
 
   position: relative;
@@ -94,7 +105,7 @@ input[type="date"] {
 }
 
 .top-bar-section ul li .alert, .notice a{
-	color: yellow;
+	color: black;
 	background-color: black;
 
 }
@@ -421,12 +432,12 @@ div.tag-container {
 span {
   white-space:nowrap;
   text-overflow:ellipsis;
-  overflow: inherit;
+  overflow: hidden;
 }
 
 ul.side-nav {
   position: fixed;
-  top: 40px;
+  top: 60px;
 }
 
 ul.side-nav a li {
@@ -435,8 +446,8 @@ ul.side-nav a li {
   color: white;
   box-shadow: 0px 0px 20px 2px #2ba6cb;
   z-index: 4;
-  text-overflow:ellipsis;
   padding-right: 5px;
+  padding-left: 5px;
 }
 
 
@@ -451,8 +462,6 @@ ul.side-nav li a {
 }
 
 div.goal-node-container {
-  text-overflow: ellipsis;
-  overflow: hidden;
   width: 40px;
 }
 
@@ -476,10 +485,70 @@ input.tag-input {
   color: black;
   position: absolute;
   top: -5px;
-  left: -60px;
+  left: -70px;
   width: 150px;
   height: 2em;
   text: 1em;
+  width: 80px;
 
-  font-family: "HelveticaNeue-UltraLight", "Helvetica";
+  font-family: "HelveticaNeue-Light", "Helvetica";
+}
+
+input.tag-input:focus {
+  box-shadow: none;
+}
+
+.top-bar-section ul li a:hover, .top-bar-section ul li form:hover {
+  color: #2ba6cb;
+  background-color: #333;
+}
+
+.top-bar-section ul {
+  background-color: black;
+}
+
+.top-bar-section ul li input {
+  color: #2ba6cb;
+  background-color: #333;
+  width: 220px;
+  margin-left: 50px;
+}
+
+.top-bar-section ul li input:focus {
+  box-shadow: none;
+}
+
+.top-bar-section ul li a.disclaimer {
+  color: #bbb;
+}
+
+.devise_form label{
+  font-family: 'HelveticaNeue-Light','Helvetica' !important;
+  color: white !important;
+}
+
+h2.title {
+  color: white;
+  margin-top: 60px;
+  text-align: center;
+}
+
+div a li div {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  z-index: 8;
+}
+
+div.row div a {
+  margin: 10px;
+}
+
+body ul div.shortcut-shelf {
+  width: 140px;
+  //background-color: red;
+}
+
+.exposed-shelf {
+  background-color: red;
 }

@@ -2,8 +2,9 @@ ST.Views.IndexGoalView = Backbone.View.extend({
   navLinkNodes: [],
 
 	events: {
-		"click .button": "show",
-		"click .finished-clickable": "switchFinished"
+		"click .button"              : "show",
+		"click .finished-clickable"  : "switchFinished",
+    "keypress #search_bar"       : "searchFilter"
 	},
 
 	render: function() {
@@ -30,6 +31,12 @@ ST.Views.IndexGoalView = Backbone.View.extend({
 		return that;
 	},
 
+  navBarAppend: function() {
+    $('#search_bar_anchor').append(
+      '<input type="text" id="search_bar" placeholder="Search through tags and titles">'
+    )
+  },
+
   appendSideView: function($el) {
     var sideBarView = new ST.Views.SideBarView({
       collection: this.collection
@@ -39,6 +46,7 @@ ST.Views.IndexGoalView = Backbone.View.extend({
   },
 
   pathToFilter: {
+    '' : 'all',
     '#' : 'all',
     '#active': false,
     '#completed' : true,
