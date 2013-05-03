@@ -253,6 +253,12 @@ ST.Views.GoalDetailView = Backbone.View.extend({
             id: model.get('id')
           })
         },
+        error: function(model) {
+          ST.Store.indexTags.add(newTag);
+          newTag.set({
+            id: model.get('id')
+          })
+        }
       });
     };
   },

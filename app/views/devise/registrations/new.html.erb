@@ -1,11 +1,13 @@
 <h2 class="title">Sign up</h2>
 <div class = "row">
 	<div class = "small-4 small-centered columns">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <form accept-charset="UTF-8" action="/users" class="new_user" id="new_user" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="51VzcTSfzK+7rJYi03TTSPfhA3WDjotUpCDfrbvRNZY="></div>
 	  	  <div class="devise_form"><label for="user_email">Email</label><br>
   		  <input autofocus="autofocus" id="user_email" name="user[email]" size="30" type="email" value=""></div>
 
-  		  <div class="devise_form"><label for="user_password">Password</label><br>
+  		  <div class="devise_form"><label for="user_password">Password <span class="gray"> ...use at least 8 characters</span></label><br>
   		  <input id="user_password" name="user[password]" size="30" type="password"></div>
 
   		  <div class="devise_form"><label for="user_password_confirmation">Password confirmation</label><br>
