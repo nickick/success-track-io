@@ -52,15 +52,8 @@ ST.Views.SideBarView = Backbone.View.extend({
     var that = this;
     that.collection.each(function(goal) {
       var $goalIdNode = $('#goal-'+goal.escape('id')+'-node')
-
-      that.navNodeTooltip($goalIdNode, goal);
       that.addScrollClicking($goalIdNode);
     });
-  },
-
-  navNodeTooltip: function($node, goal){
-    $node.tooltip();
-    $node.tooltip("option","position", { my: "left+5 center", at: "right center"});
   },
 
   addScrollClicking: function($node) {

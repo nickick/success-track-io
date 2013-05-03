@@ -251,9 +251,16 @@ ST.Views.GoalDetailView = Backbone.View.extend({
         this.model.set({
           tags: tagCollection
         });
-        this.model.save({},{
-          success: function() {ST.Store.indexTags.add(newTag)}
-        })
+        var that = this
+        that.model.save({},{
+          success: function(model) {
+            newTag.set({
+              //id: model.get('id')
+            })
+            ST.Store.indexTags.add(newTag)
+            that.savingTag = false
+          }
+        });
       };
     };
   },
