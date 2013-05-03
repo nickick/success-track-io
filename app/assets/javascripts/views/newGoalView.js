@@ -35,7 +35,9 @@ ST.Views.NewGoalView = Backbone.View.extend({
   },
 
 	filterOnEnter: function(e) {
-
+    ST.Store.searchString.set({
+      string: "none"
+    });
 		if (e.keyCode != 13) { return };
 		if (this.nameGoalOnly && !this.detailFormOut) {
 			this.appendDetail();
