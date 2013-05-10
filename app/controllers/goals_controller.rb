@@ -3,6 +3,7 @@ class GoalsController < ApplicationController
   end
   
   def splash
+    redirect_to goals_url if current_user
   end
 
   def new
