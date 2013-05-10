@@ -1,11 +1,15 @@
 class GoalsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter(:except => [:splash]) do
+  end
+  
+  def splash
+  end
 
   def new
   end
 
-  def index
-    @goals = Goal.where("user_id = ?", current_user.id)
+  def index  
+    @goals = Goal.where("user_id = ?", current_or_guest_user.id)
     @time_frames = TimeFrame.all
     @tags = Tag.all
   end
@@ -14,7 +18,7 @@ class GoalsController < ApplicationController
     if params[:goal][:tags_attributes].nil?
       params[:goal].delete(:tags_attributes)
     end
-    params[:goal][:user_id] = current_user.id
+    params[:goal][:user_id] = current_or_guest_user.id
     @goal = Goal.new(params[:goal])
     if @goal.save
       render :json => @goal

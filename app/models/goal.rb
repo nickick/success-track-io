@@ -5,6 +5,8 @@ class Goal < ActiveRecord::Base
 
   has_many :tags
   accepts_nested_attributes_for :tags
+  
+  belongs_to :user
 
   validates :name, :time_frame_id, :presence => true
   validates :finished, :inclusion => {:in => [true, false]}

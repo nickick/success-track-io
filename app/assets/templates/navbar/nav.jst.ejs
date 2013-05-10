@@ -10,19 +10,19 @@
     <ul class="left">
       <li class="divider"></li>
       <% if (ST.Store.indexGoals.length > 0){ %>
-        <li><a href="/#">All Goals</a></li>
+        <li><a href="/goals#">All Goals</a></li>
         <li class="divider"></li>
       <% }%>
       <% if (ST.Store.indexGoals.filterStatus(false).length > 0){ %>
-        <li><a href="/#active">Active</a></li>
+        <li><a href="/goals#active">Active</a></li>
         <li class="divider"></li>
       <% }%>
       <% if (ST.Store.indexGoals.filterStatus(true).length > 0){ %>
-        <li><a href="/#completed">Completed</a></li>
+        <li><a href="/goals#completed">Completed</a></li>
         <li class="divider"></li>
       <% }%>
       <% if (ST.Store.indexGoals.filterStatus("archived").length > 0){ %>
-        <li><a href="/#archived">Archived</a></li>
+        <li><a href="/goals#archived">Archived</a></li>
         <li class="divider"></li>
       <% }%>
       <li id="search_bar_anchor"></li>
@@ -36,7 +36,12 @@
       <li><a class="disclaimer">Optimized for Mac OS X Chrome</a></li>
       <li class="divider hide-for-small"></li>
       <li>
-        <a href="/users/sign_out" data-method="delete" rel="nofollow">Sign out</a>
+				<% if ($.cookie('guest_user_id')) { %>
+					<a href="/users/sign_up" data-method="get" rel="nofollow">Sign up</a>
+				<% } else { %>
+					<a href="/users/sign_out" data-method="delete" rel="nofollow">Sign out</a>
+				<% } %>
+					
       </li>
     </ul>
   </section>

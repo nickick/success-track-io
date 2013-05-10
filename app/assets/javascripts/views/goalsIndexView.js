@@ -5,49 +5,65 @@ ST.Views.IndexGoalView = Backbone.View.extend({
 		"click .button"              : "show",
 		"click .finished-clickable"  : "switchFinished",
 	},
-
-	render: function() {
+	
+	filterCollection: function(){
 		var that = this;
-    that.collection = that.collection.filterStatus(
+    var filteredCollection = that.collection.filterStatus(
       that.pathToFilter[that.currentPath()]
     );
 
-    that.collection = that.collection.filterSearch(
-      this.options.search
+    filteredCollection = filteredCollection.filterSearch(
+      that.options.search
     );
+		return filteredCollection
+	},
+
+	render: function() {
+		var that = this;
+    var filteredCollection = that.filterCollection();
 
     var renderedTopContent = JST["goals/index"]({
-			goals: that.collection
+			goals: filteredCollection
 		});
 		that.$el.html(renderedTopContent);
+		
+		that.addDetailView();
 
-		that.collection.each(function(goal) {
+    that.appendSideView($('.side-nav'));
+
+		return that;
+	},
+	
+	addDetailView: function() {
+		var that = this;
+		
+    var filteredCollection = that.filterCollection();
+		
+		filteredCollection.each(function(goal) {
 			var goalDetailView = new ST.Views.GoalDetailView({
 				model: goal
 			})
 			that.$el.append(goalDetailView.render().$el);
       that.$el.fadeIn(300);
 		});
-
-    that.appendSideView($('.side-nav'));
-
-		return that;
 	},
 
   appendSideView: function($el) {
+    var filteredCollection = this.filterCollection();
+				
     var sideBarView = new ST.Views.SideBarView({
-      collection: this.collection
+      collection: filteredCollection
     })
 
     $el.html(sideBarView.render().$el);
   },
 
   pathToFilter: {
-    '' : 'all',
-    '#' : 'all',
-    '#active': false,
-    '#completed' : true,
-    '#archived': 'archived'
+    'goals' : 'all',
+    'goals#' : 'all',
+    'goals#active': false,
+    'goals#completed' : true,
+    'goals#archived': 'archived'
   },
 
   currentPath: function() {

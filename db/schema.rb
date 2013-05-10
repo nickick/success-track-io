@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130502055628) do
+ActiveRecord::Schema.define(:version => 20130510182947) do
 
   create_table "goal_tags", :force => true do |t|
     t.integer  "goal_id"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20130502055628) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.boolean  "guest_user"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

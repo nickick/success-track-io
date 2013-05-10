@@ -29,9 +29,14 @@ ST.Views.NavBarView = Backbone.View.extend({
   },
 
   searchFilter: function(e) {
-    ST.Store.searchString.set({
-      string: $(e.target).val()
-    });
+		var searchString = $(e.target).val();
+		_.delay(function(){
+			if ($(e.target).val() === searchString) {
+		    ST.Store.searchString.set({
+		      string: searchString
+		    });
+			};
+		}, 500);
   },
 
   selectNavLi: function() {
